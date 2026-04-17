@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "BoxCoach AI",
+    "name": "Boxer AI",
     "slug": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,12 +11,18 @@
     "splash": {
       "image": "./assets/images/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0a0a0a"
     },
     "ios": {
       "supportsTablet": false
     },
-    "android": {},
+    "android": {
+      "package": "com.boxerai.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#0a0a0a"
+      }
+    },
     "web": {
       "favicon": "./assets/images/icon.png"
     },

@@ -7,6 +7,8 @@ interface AnalyzeRequest {
   opponent_style: string;
   match_description: string;
   boxer_profile: BoxerProfile;
+  images?: string[];
+  has_video?: boolean;
 }
 
 export async function analyzeMatch(req: AnalyzeRequest): Promise<PerformanceAnalysis> {

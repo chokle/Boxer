@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { openai } from "@workspace/integrations-openai-ai-server";
-import { logger } from "../lib/logger";
 
 const router = Router();
 
@@ -11,6 +10,8 @@ router.post("/analyze", async (req, res) => {
     opponent_style,
     match_description,
     boxer_profile,
+    images,
+    has_video,
   } = req.body;
 
   if (!match_description || !boxer_profile) {
@@ -18,10 +19,18 @@ router.post("/analyze", async (req, res) => {
     return;
   }
 
+  const hasImages = Array.isArray(images) && images.length > 0;
+
   const systemPrompt = `You are an elite boxing coach AI with expertise in technical analysis of boxing performance.
-You analyze match descriptions and provide detailed, actionable coaching feedback.
-Always respond with valid JSON matching the specified schema.
+You analyze match descriptions${hasImages ? ", images, and video footage" : ""} and provide detailed, actionable coaching feedback.
+${hasImages ? "When images are provided, analyze the visible technique, stance, positioning, and any observable form issues.\n" : ""}Always respond with valid JSON matching the specified schema.
 Your scoring is rigorous: 70+ is good, 80+ is excellent, 90+ is elite.`;
+
+  const mediaContext = hasImages
+    ? `\nMEDIA: ${images.length} image(s) provided — analyze visual technique in the attached image(s).`
+    : has_video
+      ? "\nMEDIA: A video recording of the session was uploaded. Consider this as supplementary evidence when evaluating the text description."
+      : "";
 
   const userPrompt = `Analyze the following boxing performance and provide scores and tactical feedback.
 
@@ -34,6 +43,7 @@ BOXER PROFILE:
 MATCH CONTEXT: ${match_context || "training"}
 OPPONENT STYLE: ${opponent_style || "balanced"}
 MATCH TITLE: ${title || "Session"}
+${mediaContext}
 
 MATCH DESCRIPTION / OBSERVATIONS:
 ${match_description}
@@ -71,12 +81,30 @@ Return a JSON object with this exact structure:
 }`;
 
   try {
+    type ContentPart =
+      | { type: "text"; text: string }
+      | { type: "image_url"; image_url: { url: string; detail: "high" | "low" | "auto" } };
+
+    const userContent: ContentPart[] = [{ type: "text", text: userPrompt }];
+
+    if (hasImages) {
+      for (const b64 of images.slice(0, 5)) {
+        const dataUrl = b64.startsWith("data:")
+          ? b64
+          : `data:image/jpeg;base64,${b64}`;
+        userContent.push({
+          type: "image_url",
+          image_url: { url: dataUrl, detail: "high" },
+        });
+      }
+    }
+
     const completion = await openai.chat.completions.create({
       model: "gpt-5.2",
       max_completion_tokens: 2500,
       messages: [
         { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt },
+        { role: "user", content: hasImages ? userContent : userPrompt },
       ],
     });
 

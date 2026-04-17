@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import {
   View, Text, ScrollView, StyleSheet, TouchableOpacity,
-  TextInput, Platform, ActivityIndicator, Alert,
+  TextInput, Platform, ActivityIndicator, Alert, Image,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
+import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import { useColors } from "@/hooks/useColors";
 import { useBoxing } from "@/context/BoxingContext";
@@ -14,6 +15,13 @@ import { analyzeMatch } from "@/lib/aiCoach";
 
 const MATCH_CONTEXTS = ["training", "sparring", "amateur", "pro"] as const;
 const OPPONENT_STYLES = ["balanced", "aggressive", "defensive", "counter", "brawler"] as const;
+const MAX_MEDIA = 5;
+
+interface MediaItem {
+  uri: string;
+  type: "image" | "video";
+  base64?: string;
+}
 
 export default function AnalyzeScreen() {
   const colors = useColors();
@@ -29,9 +37,60 @@ export default function AnalyzeScreen() {
   const [analyzing, setAnalyzing] = useState(false);
   const [step, setStep] = useState<"form" | "analyzing" | "done">("form");
   const [newSessionId, setNewSessionId] = useState<string | null>(null);
+  const [selectedMedia, setSelectedMedia] = useState<MediaItem[]>([]);
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
   const s = makeStyles(colors);
+
+  const requestPermissions = async (): Promise<boolean> => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission Required",
+        "Please allow access to your photo library to attach media.",
+        [{ text: "OK" }]
+      );
+      return false;
+    }
+    return true;
+  };
+
+  const pickMedia = async () => {
+    if (selectedMedia.length >= MAX_MEDIA) {
+      Alert.alert("Limit Reached", `You can attach up to ${MAX_MEDIA} photos or videos.`);
+      return;
+    }
+
+    const hasPermission = await requestPermissions();
+    if (!hasPermission) return;
+
+    const remaining = MAX_MEDIA - selectedMedia.length;
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images", "videos"],
+      allowsMultipleSelection: true,
+      selectionLimit: remaining,
+      quality: 0.6,
+      base64: true,
+      orderedSelection: true,
+    });
+
+    if (result.canceled) return;
+
+    const newItems: MediaItem[] = result.assets.map((asset) => ({
+      uri: asset.uri,
+      type: asset.type === "video" ? "video" : "image",
+      base64: asset.base64 ?? undefined,
+    }));
+
+    setSelectedMedia((prev) => [...prev, ...newItems].slice(0, MAX_MEDIA));
+    Haptics.selectionAsync();
+  };
+
+  const removeMedia = (index: number) => {
+    setSelectedMedia((prev) => prev.filter((_, i) => i !== index));
+    Haptics.selectionAsync();
+  };
 
   const handleAnalyze = async () => {
     if (!title.trim()) { Alert.alert("Required", "Please enter a session title"); return; }
@@ -48,6 +107,12 @@ export default function AnalyzeScreen() {
         age: null, reach_inches: null,
       };
 
+      const images = selectedMedia
+        .filter((m) => m.type === "image" && m.base64)
+        .map((m) => m.base64!);
+
+      const hasVideo = selectedMedia.some((m) => m.type === "video");
+
       const analysis = await analyzeMatch({
         title: title.trim(),
         description: description.trim(),
@@ -55,6 +120,8 @@ export default function AnalyzeScreen() {
         opponent_style: opponentStyle,
         match_description: matchDescription.trim(),
         boxer_profile: boxerProfile,
+        images: images.length > 0 ? images : undefined,
+        has_video: hasVideo || undefined,
       });
 
       const sessionId = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
@@ -83,10 +150,18 @@ export default function AnalyzeScreen() {
 
   const reset = () => {
     setTitle(""); setDescription(""); setMatchContext("sparring");
-    setOpponentStyle("balanced"); setMatchDescription(""); setStep("form"); setNewSessionId(null);
+    setOpponentStyle("balanced"); setMatchDescription("");
+    setSelectedMedia([]); setStep("form"); setNewSessionId(null);
   };
 
   if (step === "analyzing") {
+    const steps = [
+      "Evaluating stance & footwork",
+      "Scoring offensive combinations",
+      "Assessing defensive technique",
+      selectedMedia.length > 0 ? "Analyzing uploaded media" : "Reviewing session notes",
+      "Generating personalized drills",
+    ];
     return (
       <View style={[s.centeredScreen, { backgroundColor: colors.background, paddingTop: topPad }]}>
         <View style={[s.analyzeCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
@@ -95,7 +170,7 @@ export default function AnalyzeScreen() {
           <Text style={[s.analyzeSub, { color: colors.mutedForeground }]}>
             Your AI coach is reviewing the performance...
           </Text>
-          {["Evaluating stance & footwork", "Scoring offensive combinations", "Assessing defensive technique", "Generating personalized drills"].map((t, i) => (
+          {steps.map((t, i) => (
             <View key={i} style={s.analyzeStep}>
               <View style={[s.dot, { backgroundColor: colors.primary }]} />
               <Text style={[s.analyzeStepText, { color: colors.mutedForeground }]}>{t}</Text>
@@ -208,7 +283,65 @@ export default function AnalyzeScreen() {
         </View>
       </Animated.View>
 
-      <Animated.View entering={FadeInDown.duration(400).delay(320)}>
+      <Animated.View entering={FadeInDown.duration(400).delay(300)}>
+        <View style={[s.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <View style={s.mediaHeader}>
+            <Label text="PHOTOS & VIDEOS" colors={colors} style={{ marginBottom: 0 }} />
+            {selectedMedia.length > 0 && (
+              <Text style={[s.mediaCount, { color: colors.mutedForeground }]}>
+                {selectedMedia.length}/{MAX_MEDIA}
+              </Text>
+            )}
+          </View>
+          <Text style={[s.hint, { color: colors.mutedForeground }]}>
+            Attach photos or videos so your AI coach can analyze your visual technique
+          </Text>
+
+          {selectedMedia.length > 0 && (
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={s.mediaScroll} contentContainerStyle={s.mediaScrollContent}>
+              {selectedMedia.map((item, index) => (
+                <View key={index} style={s.mediaThumbnailWrap}>
+                  {item.type === "image" ? (
+                    <Image source={{ uri: item.uri }} style={s.mediaThumbnail} resizeMode="cover" />
+                  ) : (
+                    <View style={[s.mediaThumbnail, s.videoThumb, { backgroundColor: colors.muted }]}>
+                      <Feather name="video" size={26} color={colors.primary} />
+                      <Text style={[s.videoLabel, { color: colors.mutedForeground }]}>Video</Text>
+                    </View>
+                  )}
+                  <TouchableOpacity
+                    style={[s.removeBtn, { backgroundColor: colors.background }]}
+                    onPress={() => removeMedia(index)}
+                    hitSlop={{ top: 4, bottom: 4, left: 4, right: 4 }}
+                  >
+                    <Feather name="x" size={11} color={colors.foreground} />
+                  </TouchableOpacity>
+                  {item.type === "video" && (
+                    <View style={[s.videoTag, { backgroundColor: colors.primary }]}>
+                      <Feather name="play" size={8} color="#fff" />
+                    </View>
+                  )}
+                </View>
+              ))}
+            </ScrollView>
+          )}
+
+          {selectedMedia.length < MAX_MEDIA && (
+            <TouchableOpacity
+              style={[s.addMediaBtn, { borderColor: colors.border, backgroundColor: colors.muted }]}
+              onPress={pickMedia}
+              activeOpacity={0.7}
+            >
+              <Feather name="plus-circle" size={18} color={colors.primary} />
+              <Text style={[s.addMediaText, { color: colors.primary }]}>
+                {selectedMedia.length === 0 ? "Add Photos or Videos" : "Add More"}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </Animated.View>
+
+      <Animated.View entering={FadeInDown.duration(400).delay(380)}>
         <TouchableOpacity
           style={[s.analyzeBtn, { backgroundColor: analyzing ? colors.muted : colors.primary }]}
           onPress={handleAnalyze} disabled={analyzing} activeOpacity={0.8}
@@ -251,5 +384,30 @@ function makeStyles(colors: ReturnType<typeof useColors>) {
     successIcon: { width: 72, height: 72, borderRadius: 36, alignItems: "center", justifyContent: "center", borderWidth: 1, marginBottom: 4 },
     bigBtn: { width: "100%", paddingVertical: 14, borderRadius: 12, alignItems: "center" },
     bigBtnText: { color: "#fff", fontSize: 15, fontFamily: "Inter_600SemiBold" },
+    mediaHeader: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 8 },
+    mediaCount: { fontSize: 12, fontFamily: "Inter_400Regular" },
+    mediaScroll: { marginBottom: 12 },
+    mediaScrollContent: { gap: 10, paddingRight: 4 },
+    mediaThumbnailWrap: { position: "relative", width: 90, height: 90 },
+    mediaThumbnail: { width: 90, height: 90, borderRadius: 10 },
+    videoThumb: { alignItems: "center", justifyContent: "center", gap: 4 },
+    videoLabel: { fontSize: 11, fontFamily: "Inter_500Medium" },
+    removeBtn: {
+      position: "absolute", top: -6, right: -6,
+      width: 20, height: 20, borderRadius: 10,
+      alignItems: "center", justifyContent: "center",
+      shadowColor: "#000", shadowOpacity: 0.15, shadowRadius: 3, shadowOffset: { width: 0, height: 1 },
+      elevation: 3,
+    },
+    videoTag: {
+      position: "absolute", bottom: 6, left: 6,
+      width: 16, height: 16, borderRadius: 8,
+      alignItems: "center", justifyContent: "center",
+    },
+    addMediaBtn: {
+      flexDirection: "row", alignItems: "center", justifyContent: "center",
+      gap: 8, paddingVertical: 13, borderRadius: 10, borderWidth: 1, borderStyle: "dashed",
+    },
+    addMediaText: { fontSize: 14, fontFamily: "Inter_500Medium" },
   });
 }

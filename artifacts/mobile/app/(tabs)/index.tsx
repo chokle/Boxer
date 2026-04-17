@@ -50,7 +50,7 @@ export default function DashboardScreen() {
               Welcome back, Champ
             </Text>
             <Text style={[styles.title, { color: colors.foreground }]}>
-              BoxCoach AI
+              Boxer AI
             </Text>
           </View>
           <TouchableOpacity

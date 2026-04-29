@@ -1,6 +1,6 @@
 kind = "mobile"
 previewPath = "/"
-title = "BoxCoach AI"
+title = "Boxer AI"
 version = "1.0.0"
 id = "artifacts/mobile"
 router = "expo-domain"

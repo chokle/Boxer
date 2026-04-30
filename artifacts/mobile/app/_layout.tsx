@@ -8,13 +8,14 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { setBaseUrl } from "@workspace/api-client-react";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { IntroVideo } from "@/components/IntroVideo";
 import { BoxingProvider } from "@/context/BoxingContext";
 
 if (process.env.EXPO_PUBLIC_DOMAIN) {
@@ -45,6 +46,12 @@ export default function RootLayout() {
     Inter_700Bold,
   });
 
+  const [introDone, setIntroDone] = useState(false);
+
+  const handleIntroFinish = useCallback(() => {
+    setIntroDone(true);
+  }, []);
+
   useEffect(() => {
     if (fontsLoaded || fontError) {
       SplashScreen.hideAsync();
@@ -58,9 +65,10 @@ export default function RootLayout() {
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
           <BoxingProvider>
-            <GestureHandlerRootView>
+            <GestureHandlerRootView style={{ flex: 1 }}>
               <KeyboardProvider>
                 <RootLayoutNav />
+                {!introDone && <IntroVideo onFinish={handleIntroFinish} />}
               </KeyboardProvider>
             </GestureHandlerRootView>
           </BoxingProvider>

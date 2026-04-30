@@ -18,15 +18,107 @@ import Animated, {
 import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const introSource = require("@/assets/videos/intro.mp4");
-
 const FADE_OUT_DURATION = 700;
 const TITLE_DELAY = 600;
 const TITLE_DURATION = 800;
-const SAFETY_TIMEOUT_MS = 7500;
+const SAFETY_TIMEOUT_MS = 9000;
+const WEB_WEBM_URL = "/intro.webm";
+const WEB_MP4_URL = "/intro.mp4";
 
 interface IntroVideoProps {
   onFinish: () => void;
+}
+
+// Web uses a plain HTML5 <video> with the proper autoplay attributes
+// because expo-video's web wrapper does not set autoplay/muted/playsinline
+// on the underlying element, which browsers require for autoplay.
+function WebIntroVideo({
+  onEnded,
+  onError,
+}: {
+  onEnded: () => void;
+  onError: () => void;
+}) {
+  const ref = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    const tryPlay = () => {
+      // Don't bail on rejection — the <video autoPlay muted> attributes still
+      // let the browser show frames as soon as it can. The safety timeout in
+      // the parent handles the worst case if play() is blocked.
+      v.play().catch(() => {});
+    };
+    if (v.readyState >= 2) {
+      tryPlay();
+    } else {
+      v.addEventListener("loadeddata", tryPlay, { once: true });
+      v.addEventListener("canplay", tryPlay, { once: true });
+    }
+    return () => {
+      v.removeEventListener("loadeddata", tryPlay);
+      v.removeEventListener("canplay", tryPlay);
+    };
+  }, []);
+
+  return (
+    // @ts-expect-error - HTML video element rendered on web only
+    <video
+      ref={ref}
+      autoPlay
+      muted
+      playsInline
+      preload="auto"
+      onEnded={onEnded}
+      onError={onError}
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        backgroundColor: "#000",
+      }}
+    >
+      {/* @ts-expect-error - HTML source element rendered on web only */}
+      <source src={WEB_WEBM_URL} type="video/webm" />
+      {/* @ts-expect-error - HTML source element rendered on web only */}
+      <source src={WEB_MP4_URL} type="video/mp4" />
+    </video>
+  );
+}
+
+function NativeIntroVideo({ onEnded }: { onEnded: () => void }) {
+  const player = useVideoPlayer(
+    require("@/assets/videos/intro.mp4"),
+    (p) => {
+      p.loop = false;
+      p.muted = true;
+      p.play();
+    }
+  );
+
+  useEffect(() => {
+    const endSub = player.addListener("playToEnd", () => {
+      onEnded();
+    });
+    return () => {
+      endSub.remove();
+    };
+  }, [player, onEnded]);
+
+  return (
+    <VideoView
+      player={player}
+      style={StyleSheet.absoluteFill}
+      contentFit="cover"
+      nativeControls={false}
+      allowsFullscreen={false}
+      allowsPictureInPicture={false}
+    />
+  );
 }
 
 export function IntroVideo({ onFinish }: IntroVideoProps) {
@@ -37,12 +129,6 @@ export function IntroVideo({ onFinish }: IntroVideoProps) {
   const titleOpacity = useSharedValue(0);
   const titleTranslate = useSharedValue(20);
   const skipOpacity = useSharedValue(0);
-
-  const player = useVideoPlayer(introSource, (p) => {
-    p.loop = false;
-    p.muted = true;
-    p.play();
-  });
 
   const handleFinish = () => {
     if (finishedRef.current) return;
@@ -71,24 +157,7 @@ export function IntroVideo({ onFinish }: IntroVideoProps) {
     );
   }, [titleOpacity, titleTranslate, skipOpacity]);
 
-  useEffect(() => {
-    const endSub = player.addListener("playToEnd", () => {
-      handleFinish();
-    });
-    const statusSub = player.addListener("statusChange", (event) => {
-      if (event.status === "error") {
-        handleFinish();
-      }
-    });
-    return () => {
-      endSub.remove();
-      statusSub.remove();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [player]);
-
-  // Safety net: ensure intro always exits even if events don't fire
-  // (e.g. on web where playToEnd may behave differently).
+  // Safety net: ensure intro always exits even if events don't fire.
   useEffect(() => {
     const timeout = setTimeout(() => {
       handleFinish();
@@ -115,14 +184,11 @@ export function IntroVideo({ onFinish }: IntroVideoProps) {
       style={[StyleSheet.absoluteFill, styles.container, overlayStyle]}
       pointerEvents="auto"
     >
-      <VideoView
-        player={player}
-        style={StyleSheet.absoluteFill}
-        contentFit="cover"
-        nativeControls={false}
-        allowsFullscreen={false}
-        allowsPictureInPicture={false}
-      />
+      {Platform.OS === "web" ? (
+        <WebIntroVideo onEnded={handleFinish} onError={handleFinish} />
+      ) : (
+        <NativeIntroVideo onEnded={handleFinish} />
+      )}
 
       <LinearGradient
         colors={["rgba(0,0,0,0.55)", "rgba(0,0,0,0.15)", "rgba(0,0,0,0.85)"]}

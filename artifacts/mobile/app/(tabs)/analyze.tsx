@@ -107,7 +107,7 @@ export default function AnalyzeScreen() {
       const boxerProfile = profile ?? {
         name: "Boxer", weight_class: "Middleweight",
         experience_level: "Intermediate" as const, stance: "Orthodox" as const,
-        age: null, reach_inches: null,
+        age: null, reach_inches: null, weight_kg: null, height_cm: null, injuries: [],
       };
 
       const images = selectedMedia

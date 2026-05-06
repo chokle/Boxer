@@ -3,6 +3,20 @@ export type Stance = 'Orthodox' | 'Southpaw' | 'Switch';
 export type DrillDifficulty = 'Easy' | 'Medium' | 'Hard';
 export type DrillCategory = 'footwork' | 'offense' | 'defense' | 'stamina' | 'combination' | 'general';
 
+export type InjuryArea =
+  | 'Head' | 'Neck' | 'Shoulder' | 'Elbow' | 'Hand/Wrist'
+  | 'Ribs' | 'Back' | 'Hip' | 'Knee' | 'Ankle/Foot' | 'Other';
+export type InjurySeverity = 'Mild' | 'Moderate' | 'Severe';
+
+export interface Injury {
+  id: string;
+  area: InjuryArea;
+  severity: InjurySeverity;
+  notes: string;
+  date: string;
+  active: boolean;
+}
+
 export interface BoxerProfile {
   name: string;
   weight_class: string;
@@ -10,6 +24,9 @@ export interface BoxerProfile {
   stance: Stance;
   age: number | null;
   reach_inches: number | null;
+  weight_kg: number | null;
+  height_cm: number | null;
+  injuries: Injury[];
 }
 
 export interface DrillRecommendation {

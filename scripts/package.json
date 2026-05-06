@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "hello": "tsx ./src/hello.ts",
+    "clear-community": "tsx ./src/clear-community.ts",
     "seed-community": "tsx ./src/seed-community.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },

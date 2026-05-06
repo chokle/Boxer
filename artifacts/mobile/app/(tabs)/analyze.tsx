@@ -94,7 +94,10 @@ export default function AnalyzeScreen() {
 
   const handleAnalyze = async () => {
     if (!title.trim()) { Alert.alert("Required", "Please enter a session title"); return; }
-    if (!matchDescription.trim()) { Alert.alert("Required", "Please describe what happened in the match"); return; }
+    if (!matchDescription.trim() && selectedMedia.length === 0) {
+      Alert.alert("Required", "Please add a match summary or upload at least one photo/video for AI analysis");
+      return;
+    }
 
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setAnalyzing(true);
@@ -271,8 +274,11 @@ export default function AnalyzeScreen() {
 
       <Animated.View entering={FadeInDown.duration(400).delay(240)}>
         <View style={[s.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <Label text="MATCH SUMMARY" colors={colors} />
-          <Text style={[s.hint, { color: colors.mutedForeground }]}>Describe key moments, your stance, combinations, defense, footwork</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 6, marginBottom: 6 }}>
+            <Label text="MATCH SUMMARY" colors={colors} style={{ marginBottom: 0 }} />
+            <Text style={{ fontSize: 10, fontFamily: "Inter_400Regular", color: colors.mutedForeground }}>(optional if media uploaded)</Text>
+          </View>
+          <Text style={[s.hint, { color: colors.mutedForeground }]}>Describe key moments, your stance, combinations, defense, footwork — or skip and let AI analyze your media</Text>
           <TextInput
             style={[s.textarea, { color: colors.foreground, borderColor: colors.border, backgroundColor: colors.muted }]}
             placeholder="What happened? What went well? What challenges did you face? Be specific about techniques used..."

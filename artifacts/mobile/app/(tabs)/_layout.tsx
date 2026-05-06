@@ -1,42 +1,54 @@
 import { BlurView } from "expo-blur";
+import { Image } from "expo-image";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
-import { Tabs, usePathname } from "expo-router";
+import { Tabs } from "expo-router";
 import { Icon, Label, NativeTabs } from "expo-router/unstable-native-tabs";
 import { SymbolView } from "expo-symbols";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { useEffect, useRef } from "react";
-import { Platform, StyleSheet, TouchableOpacity, View, useColorScheme } from "react-native";
+import React, { useState } from "react";
+import {
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  useColorScheme,
+} from "react-native";
 import Animated, {
-  useSharedValue, useAnimatedStyle,
-  withSequence, withTiming, Easing,
+  useSharedValue,
+  useAnimatedStyle,
+  withSequence,
+  withTiming,
+  Easing,
 } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import { useColors } from "@/hooks/useColors";
 
-function useTabFlash() {
-  const opacity = useSharedValue(0);
-  const scale = useSharedValue(1);
+const BOXING_IMAGES = [
+  "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=800&q=80",
+  "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&q=80",
+  "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=800&q=80",
+  "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&q=80",
+  "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=800&q=80",
+];
 
-  const flash = () => {
-    "worklet";
+function useTabTransition() {
+  const opacity = useSharedValue(0);
+  const [imageIdx, setImageIdx] = useState(0);
+
+  const trigger = () => {
+    setImageIdx(Math.floor(Math.random() * BOXING_IMAGES.length));
     opacity.value = withSequence(
-      withTiming(0.16, { duration: 55, easing: Easing.out(Easing.quad) }),
-      withTiming(0, { duration: 260, easing: Easing.in(Easing.quad) }),
-    );
-    scale.value = withSequence(
-      withTiming(1.03, { duration: 55, easing: Easing.out(Easing.quad) }),
-      withTiming(1, { duration: 260, easing: Easing.out(Easing.quad) }),
+      withTiming(0.88, { duration: 320, easing: Easing.out(Easing.cubic) }),
+      withTiming(0, { duration: 700, easing: Easing.in(Easing.quad) }),
     );
   };
 
   const overlayStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
-    transform: [{ scale: scale.value }],
     ...StyleSheet.absoluteFillObject,
-    pointerEvents: "none" as const,
   }));
 
-  return { flash, overlayStyle };
+  return { trigger, overlayStyle, imageIdx };
 }
 
 function NativeTabLayout() {
@@ -72,26 +84,20 @@ function ClassicTabLayout() {
   const isDark = colorScheme === "dark";
   const isIOS = Platform.OS === "ios";
   const isWeb = Platform.OS === "web";
-  const { flash, overlayStyle } = useTabFlash();
+  const { trigger, overlayStyle, imageIdx } = useTabTransition();
 
   const handleTabPress = () => {
     if (Platform.OS !== "web") Haptics.selectionAsync();
-    flash();
+    trigger();
   };
 
-  const makeTabButton = (children: React.ReactNode, onPress?: () => void) =>
-    (props: { onPress?: () => void; children?: React.ReactNode; style?: object }) => (
-      <TouchableOpacity
-        {...props}
-        activeOpacity={0.75}
-        onPress={() => {
-          handleTabPress();
-          props.onPress?.();
-        }}
-      >
-        {props.children}
-      </TouchableOpacity>
-    );
+  const TAB_CONFIG = [
+    { name: "index",     title: "Dashboard", sf: "house",                    feather: "home" },
+    { name: "analyze",   title: "Analyze",   sf: "chart.bar.doc.horizontal", feather: "zap" },
+    { name: "drills",    title: "Drills",    sf: "figure.boxing",             material: "boxing-glove" },
+    { name: "community", title: "Community", sf: "person.3",                  feather: "users" },
+    { name: "profile",   title: "Profile",   sf: "person",                    feather: "user" },
+  ] as const;
 
   return (
     <View style={{ flex: 1 }}>
@@ -120,47 +126,55 @@ function ClassicTabLayout() {
             ) : null,
         }}
       >
-        {(["index", "analyze", "drills", "community", "profile"] as const).map((name) => {
-          const icons: Record<string, { sf: string; feather?: string; material?: string }> = {
-            index:     { sf: "house",                        feather: "home" },
-            analyze:   { sf: "chart.bar.doc.horizontal",     feather: "zap" },
-            drills:    { sf: "figure.boxing",                material: "boxing-glove" },
-            community: { sf: "person.3",                     feather: "users" },
-            profile:   { sf: "person",                       feather: "user" },
-          };
-          const titles: Record<string, string> = {
-            index: "Dashboard", analyze: "Analyze",
-            drills: "Drills", community: "Community", profile: "Profile",
-          };
-          const cfg = icons[name];
-          return (
-            <Tabs.Screen
-              key={name}
-              name={name}
-              options={{
-                title: titles[name],
-                tabBarButton: (props: any) => (
-                  <TouchableOpacity
-                    {...props}
-                    activeOpacity={0.75}
-                    onPress={() => { handleTabPress(); props.onPress?.(); }}
-                  />
+        {TAB_CONFIG.map((cfg) => (
+          <Tabs.Screen
+            key={cfg.name}
+            name={cfg.name}
+            options={{
+              title: cfg.title,
+              tabBarButton: (props: any) => (
+                <TouchableOpacity
+                  {...props}
+                  activeOpacity={0.75}
+                  onPress={() => {
+                    handleTabPress();
+                    props.onPress?.();
+                  }}
+                />
+              ),
+              tabBarIcon: ({ color }: { color: string }) =>
+                isIOS ? (
+                  <SymbolView name={cfg.sf as any} tintColor={color} size={24} />
+                ) : "material" in cfg ? (
+                  <MaterialCommunityIcons name={cfg.material as any} size={22} color={color} />
+                ) : (
+                  <Feather name={(cfg as any).feather} size={22} color={color} />
                 ),
-                tabBarIcon: ({ color }: { color: string }) =>
-                  isIOS ? (
-                    <SymbolView name={cfg.sf as any} tintColor={color} size={24} />
-                  ) : cfg.material ? (
-                    <MaterialCommunityIcons name={cfg.material as any} size={22} color={color} />
-                  ) : (
-                    <Feather name={cfg.feather as any} size={22} color={color} />
-                  ),
-              }}
-            />
-          );
-        })}
+            }}
+          />
+        ))}
       </Tabs>
-      {/* Full-screen punch flash overlay — plays on every tab press */}
-      <Animated.View style={[overlayStyle, { backgroundColor: colors.primary, zIndex: 50 }]} pointerEvents="none" />
+
+      {/* Boxing image crossfade — fades over 1 second on every tab press */}
+      <Animated.View
+        style={[overlayStyle, { zIndex: 50 }]}
+        pointerEvents="none"
+      >
+        <Image
+          source={{ uri: BOXING_IMAGES[imageIdx] }}
+          style={StyleSheet.absoluteFill}
+          contentFit="cover"
+          transition={0}
+          cachePolicy="memory-disk"
+        />
+        {/* Dark tint so the image isn't too jarring */}
+        <View
+          style={[
+            StyleSheet.absoluteFill,
+            { backgroundColor: "rgba(0,0,0,0.35)" },
+          ]}
+        />
+      </Animated.View>
     </View>
   );
 }

@@ -1,12 +1,43 @@
 import { BlurView } from "expo-blur";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
-import { Tabs } from "expo-router";
+import { Tabs, usePathname } from "expo-router";
 import { Icon, Label, NativeTabs } from "expo-router/unstable-native-tabs";
 import { SymbolView } from "expo-symbols";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import React from "react";
-import { Platform, StyleSheet, View, useColorScheme } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { Platform, StyleSheet, TouchableOpacity, View, useColorScheme } from "react-native";
+import Animated, {
+  useSharedValue, useAnimatedStyle,
+  withSequence, withTiming, Easing,
+} from "react-native-reanimated";
+import * as Haptics from "expo-haptics";
 import { useColors } from "@/hooks/useColors";
+
+function useTabFlash() {
+  const opacity = useSharedValue(0);
+  const scale = useSharedValue(1);
+
+  const flash = () => {
+    "worklet";
+    opacity.value = withSequence(
+      withTiming(0.16, { duration: 55, easing: Easing.out(Easing.quad) }),
+      withTiming(0, { duration: 260, easing: Easing.in(Easing.quad) }),
+    );
+    scale.value = withSequence(
+      withTiming(1.03, { duration: 55, easing: Easing.out(Easing.quad) }),
+      withTiming(1, { duration: 260, easing: Easing.out(Easing.quad) }),
+    );
+  };
+
+  const overlayStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [{ scale: scale.value }],
+    ...StyleSheet.absoluteFillObject,
+    pointerEvents: "none" as const,
+  }));
+
+  return { flash, overlayStyle };
+}
 
 function NativeTabLayout() {
   return (
@@ -41,74 +72,96 @@ function ClassicTabLayout() {
   const isDark = colorScheme === "dark";
   const isIOS = Platform.OS === "ios";
   const isWeb = Platform.OS === "web";
+  const { flash, overlayStyle } = useTabFlash();
+
+  const handleTabPress = () => {
+    if (Platform.OS !== "web") Haptics.selectionAsync();
+    flash();
+  };
+
+  const makeTabButton = (children: React.ReactNode, onPress?: () => void) =>
+    (props: { onPress?: () => void; children?: React.ReactNode; style?: object }) => (
+      <TouchableOpacity
+        {...props}
+        activeOpacity={0.75}
+        onPress={() => {
+          handleTabPress();
+          props.onPress?.();
+        }}
+      >
+        {props.children}
+      </TouchableOpacity>
+    );
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.mutedForeground,
-        headerShown: false,
-        tabBarStyle: {
-          position: "absolute",
-          backgroundColor: isIOS ? "transparent" : colors.background,
-          borderTopWidth: isWeb ? 1 : 0,
-          borderTopColor: colors.border,
-          elevation: 0,
-          ...(isWeb ? { height: 84 } : {}),
-        },
-        tabBarBackground: () =>
-          isIOS ? (
-            <BlurView
-              intensity={100}
-              tint={isDark ? "dark" : "light"}
-              style={StyleSheet.absoluteFill}
+    <View style={{ flex: 1 }}>
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: colors.primary,
+          tabBarInactiveTintColor: colors.mutedForeground,
+          headerShown: false,
+          tabBarStyle: {
+            position: "absolute",
+            backgroundColor: isIOS ? "transparent" : colors.background,
+            borderTopWidth: isWeb ? 1 : 0,
+            borderTopColor: colors.border,
+            elevation: 0,
+            ...(isWeb ? { height: 84 } : {}),
+          },
+          tabBarBackground: () =>
+            isIOS ? (
+              <BlurView
+                intensity={100}
+                tint={isDark ? "dark" : "light"}
+                style={StyleSheet.absoluteFill}
+              />
+            ) : isWeb ? (
+              <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.background }]} />
+            ) : null,
+        }}
+      >
+        {(["index", "analyze", "drills", "community", "profile"] as const).map((name) => {
+          const icons: Record<string, { sf: string; feather?: string; material?: string }> = {
+            index:     { sf: "house",                        feather: "home" },
+            analyze:   { sf: "chart.bar.doc.horizontal",     feather: "zap" },
+            drills:    { sf: "figure.boxing",                material: "boxing-glove" },
+            community: { sf: "person.3",                     feather: "users" },
+            profile:   { sf: "person",                       feather: "user" },
+          };
+          const titles: Record<string, string> = {
+            index: "Dashboard", analyze: "Analyze",
+            drills: "Drills", community: "Community", profile: "Profile",
+          };
+          const cfg = icons[name];
+          return (
+            <Tabs.Screen
+              key={name}
+              name={name}
+              options={{
+                title: titles[name],
+                tabBarButton: (props: any) => (
+                  <TouchableOpacity
+                    {...props}
+                    activeOpacity={0.75}
+                    onPress={() => { handleTabPress(); props.onPress?.(); }}
+                  />
+                ),
+                tabBarIcon: ({ color }: { color: string }) =>
+                  isIOS ? (
+                    <SymbolView name={cfg.sf as any} tintColor={color} size={24} />
+                  ) : cfg.material ? (
+                    <MaterialCommunityIcons name={cfg.material as any} size={22} color={color} />
+                  ) : (
+                    <Feather name={cfg.feather as any} size={22} color={color} />
+                  ),
+              }}
             />
-          ) : isWeb ? (
-            <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.background }]} />
-          ) : null,
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Dashboard",
-          tabBarIcon: ({ color }) =>
-            isIOS ? <SymbolView name="house" tintColor={color} size={24} /> : <Feather name="home" size={22} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="analyze"
-        options={{
-          title: "Analyze",
-          tabBarIcon: ({ color }) =>
-            isIOS ? <SymbolView name="chart.bar.doc.horizontal" tintColor={color} size={24} /> : <Feather name="zap" size={22} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="drills"
-        options={{
-          title: "Drills",
-          tabBarIcon: ({ color }) =>
-            isIOS ? <SymbolView name="figure.boxing" tintColor={color} size={24} /> : <MaterialCommunityIcons name="boxing-glove" size={22} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="community"
-        options={{
-          title: "Community",
-          tabBarIcon: ({ color }) =>
-            isIOS ? <SymbolView name="person.3" tintColor={color} size={24} /> : <Feather name="users" size={22} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color }) =>
-            isIOS ? <SymbolView name="person" tintColor={color} size={24} /> : <Feather name="user" size={22} color={color} />,
-        }}
-      />
-    </Tabs>
+          );
+        })}
+      </Tabs>
+      {/* Full-screen punch flash overlay — plays on every tab press */}
+      <Animated.View style={[overlayStyle, { backgroundColor: colors.primary, zIndex: 50 }]} pointerEvents="none" />
+    </View>
   );
 }
 

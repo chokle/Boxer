@@ -63,9 +63,8 @@ function WebIntroVideo({
   }, []);
 
   return (
-    // @ts-expect-error - HTML video element rendered on web only
     <video
-      ref={ref}
+      ref={ref as any}
       autoPlay
       muted
       playsInline
@@ -80,11 +79,9 @@ function WebIntroVideo({
         height: "100%",
         objectFit: "cover",
         backgroundColor: "#000",
-      }}
+      } as any}
     >
-      {/* @ts-expect-error - HTML source element rendered on web only */}
       <source src={WEB_WEBM_URL} type="video/webm" />
-      {/* @ts-expect-error - HTML source element rendered on web only */}
       <source src={WEB_MP4_URL} type="video/mp4" />
     </video>
   );

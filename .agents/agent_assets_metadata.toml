@@ -12,3 +12,9 @@ id = "XQS54xhRjRjWUHkuFM9U6"
 uri = "file://artifacts/mobile/assets/images/splash.png"
 type = "image"
 title = "generated_image"
+
+[[generated]]
+id = "CqVm7ZVVpc5Fii9yfSdcm"
+uri = "file://artifacts/mobile/assets/images/intro-punch.png"
+type = "image"
+title = "knockout punch intro"

@@ -7,6 +7,7 @@ import * as Haptics from "expo-haptics";
 import { useColors } from "@/hooks/useColors";
 import { useBoxing } from "@/context/BoxingContext";
 import type { DrillRecommendation } from "@/types";
+import { TabBgImage, TAB_BG_IMAGES } from "@/components/TabBgImage";
 
 const CATEGORY_COLORS: Record<string, string> = {
   footwork: "#3b82f6",
@@ -48,11 +49,13 @@ export default function DrillsScreen() {
   };
 
   return (
-    <ScrollView
-      style={[s.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100, paddingHorizontal: 20 }}
-      showsVerticalScrollIndicator={false}
-    >
+    <View style={{ flex: 1 }}>
+      <TabBgImage uri={TAB_BG_IMAGES.drills} />
+      <ScrollView
+        style={s.container}
+        contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100, paddingHorizontal: 20 }}
+        showsVerticalScrollIndicator={false}
+      >
       <Animated.View entering={FadeInDown.duration(400)}>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Training Drills</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Personalized exercises from your match analyses</Text>
@@ -112,7 +115,8 @@ export default function DrillsScreen() {
           )}
         </>
       )}
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 

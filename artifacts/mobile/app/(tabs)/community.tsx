@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { useColors } from "@/hooks/useColors";
+import { TabBgImage, TAB_BG_IMAGES } from "@/components/TabBgImage";
 
 const API_BASE = `https://${process.env.EXPO_PUBLIC_DOMAIN}/api`;
 
@@ -122,12 +123,14 @@ export default function CommunityScreen() {
   );
 
   return (
-    <ScrollView
-      style={[s.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100 }}
-      showsVerticalScrollIndicator={false}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
-    >
+    <View style={{ flex: 1 }}>
+      <TabBgImage uri={TAB_BG_IMAGES.community} />
+      <ScrollView
+        style={s.container}
+        contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100 }}
+        showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
+      >
       <Animated.View entering={FadeInDown.duration(400)} style={s.header}>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Community</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Local gyms, fighter rankings & upcoming events</Text>
@@ -378,7 +381,8 @@ export default function CommunityScreen() {
           )}
         </Animated.View>
       )}
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 

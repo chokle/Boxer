@@ -12,6 +12,7 @@ import { useRouter } from "expo-router";
 import { useColors } from "@/hooks/useColors";
 import { useBoxing } from "@/context/BoxingContext";
 import { analyzeMatch } from "@/lib/aiCoach";
+import { TabBgImage, TAB_BG_IMAGES } from "@/components/TabBgImage";
 
 const MATCH_CONTEXTS = ["training", "sparring", "amateur", "pro"] as const;
 const OPPONENT_STYLES = ["balanced", "aggressive", "defensive", "counter", "brawler"] as const;
@@ -166,7 +167,7 @@ export default function AnalyzeScreen() {
       "Generating personalized drills",
     ];
     return (
-      <View style={[s.centeredScreen, { backgroundColor: colors.background, paddingTop: topPad }]}>
+      <View style={[s.centeredScreen, { paddingTop: topPad }]}>
         <View style={[s.analyzeCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <ActivityIndicator size="large" color={colors.primary} />
           <Text style={[s.analyzeTitle, { color: colors.foreground }]}>Analyzing Your Match</Text>
@@ -186,7 +187,7 @@ export default function AnalyzeScreen() {
 
   if (step === "done" && newSessionId) {
     return (
-      <View style={[s.centeredScreen, { backgroundColor: colors.background, paddingTop: topPad }]}>
+      <View style={[s.centeredScreen, { paddingTop: topPad }]}>
         <View style={[s.analyzeCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <View style={[s.successIcon, { backgroundColor: `${colors.success}20`, borderColor: `${colors.success}40` }]}>
             <Feather name="check-circle" size={36} color={colors.success} />
@@ -211,12 +212,14 @@ export default function AnalyzeScreen() {
   }
 
   return (
-    <ScrollView
-      style={[s.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100, paddingHorizontal: 20 }}
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-    >
+    <View style={{ flex: 1 }}>
+      <TabBgImage uri={TAB_BG_IMAGES.analyze} />
+      <ScrollView
+        style={s.container}
+        contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100, paddingHorizontal: 20 }}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
       <Animated.View entering={FadeInDown.duration(400)}>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Analyze Match</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Describe your match for instant AI coaching feedback</Text>
@@ -358,7 +361,8 @@ export default function AnalyzeScreen() {
           </Text>
         </TouchableOpacity>
       </Animated.View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 

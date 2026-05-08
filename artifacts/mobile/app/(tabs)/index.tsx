@@ -10,6 +10,7 @@ import { StatCard } from "@/components/StatCard";
 import { SessionCard } from "@/components/SessionCard";
 import { ScoreRing } from "@/components/ScoreRing";
 import { PerformanceChart } from "@/components/PerformanceChart";
+import { TabBgImage, TAB_BG_IMAGES } from "@/components/TabBgImage";
 
 export default function DashboardScreen() {
   const colors = useColors();
@@ -23,11 +24,13 @@ export default function DashboardScreen() {
   const s = makeStyles(colors);
 
   return (
-    <ScrollView
-      style={[s.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100, paddingHorizontal: 20 }}
-      showsVerticalScrollIndicator={false}
-    >
+    <View style={{ flex: 1 }}>
+      <TabBgImage uri={TAB_BG_IMAGES.dashboard} />
+      <ScrollView
+        style={s.container}
+        contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100, paddingHorizontal: 20 }}
+        showsVerticalScrollIndicator={false}
+      >
       <Animated.View entering={FadeInDown.duration(400)}>
         <View style={s.header}>
           <View>
@@ -102,7 +105,8 @@ export default function DashboardScreen() {
           </TouchableOpacity>
         </Animated.View>
       )}
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 

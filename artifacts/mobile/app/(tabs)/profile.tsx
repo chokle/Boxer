@@ -10,6 +10,7 @@ import * as Haptics from "expo-haptics";
 import { useColors } from "@/hooks/useColors";
 import { useBoxing } from "@/context/BoxingContext";
 import type { ExperienceLevel, Stance, Injury, InjuryArea, InjurySeverity } from "@/types";
+import { TabBgImage, TAB_BG_IMAGES } from "@/components/TabBgImage";
 
 const STANCES: Stance[] = ["Orthodox", "Southpaw", "Switch"];
 const LEVELS: ExperienceLevel[] = ["Beginner", "Intermediate", "Advanced", "Pro"];
@@ -179,12 +180,14 @@ export default function ProfileScreen() {
   const s = makeStyles(colors);
 
   return (
-    <ScrollView
-      style={[s.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100, paddingHorizontal: 20 }}
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-    >
+    <View style={{ flex: 1 }}>
+      <TabBgImage uri={TAB_BG_IMAGES.profile} />
+      <ScrollView
+        style={s.container}
+        contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100, paddingHorizontal: 20 }}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
       <Animated.View entering={FadeInDown.duration(400)}>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Boxer Profile</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Your stats improve AI coaching accuracy</Text>
@@ -452,7 +455,8 @@ export default function ProfileScreen() {
           </ScrollView>
         </View>
       </Modal>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 

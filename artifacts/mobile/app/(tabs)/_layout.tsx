@@ -62,6 +62,7 @@ function ClassicTabLayout() {
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Tabs
+        detachInactiveScreens={false}
         screenOptions={{
           tabBarActiveTintColor: colors.primary,
           tabBarInactiveTintColor: colors.mutedForeground,

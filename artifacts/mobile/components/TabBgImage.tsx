@@ -32,11 +32,10 @@ export function TabBgImage({ uri }: TabBgImageProps) {
 
   useFocusEffect(
     useCallback(() => {
-      opacity.value = withTiming(1, { duration: 700, easing: Easing.inOut(Easing.quad) });
-      return () => {
-        // Instant reset so next focus always starts from transparent
-        opacity.value = 0;
-      };
+      // Fade in on first focus only — no reset on blur so it stays visible
+      if (opacity.value < 1) {
+        opacity.value = withTiming(1, { duration: 700, easing: Easing.inOut(Easing.quad) });
+      }
     }, [opacity])
   );
 

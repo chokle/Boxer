@@ -5,7 +5,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
-import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import { useColors } from "@/hooks/useColors";
 import { useBoxing } from "@/context/BoxingContext";
@@ -188,13 +188,13 @@ export default function ProfileScreen() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-      <Animated.View entering={FadeInDown.duration(400)}>
+      <Animated.View>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Boxer Profile</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Your stats improve AI coaching accuracy</Text>
       </Animated.View>
 
       {sessions.length > 0 && (
-        <Animated.View entering={FadeInDown.duration(400).delay(60)}>
+        <Animated.View>
           <View style={[s.statsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <StatItem label="Sessions" value={`${sessions.length}`} colors={colors} />
             <Divider colors={colors} />
@@ -208,7 +208,7 @@ export default function ProfileScreen() {
       )}
 
       {/* ── Personal Info ─────────────────────────────────────────────── */}
-      <Animated.View entering={FadeInDown.duration(400).delay(120)}>
+      <Animated.View>
         <View style={[s.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Text style={[s.sectionTitle, { color: colors.foreground }]}>Personal Info</Text>
 
@@ -273,7 +273,7 @@ export default function ProfileScreen() {
 
           {/* BMI Display */}
           {bmi !== null && (
-            <Animated.View entering={FadeIn.duration(300)} style={[s.bmiCard, {
+            <Animated.View style={[s.bmiCard, {
               backgroundColor: `${SEVERITY_COLORS[bmiCategory(bmi) === "Normal" ? "Mild" : bmiCategory(bmi) === "Overweight" ? "Moderate" : "Severe"]}15`,
               borderColor: `${SEVERITY_COLORS[bmiCategory(bmi) === "Normal" ? "Mild" : bmiCategory(bmi) === "Overweight" ? "Moderate" : "Severe"]}40`,
             }]}>
@@ -298,7 +298,7 @@ export default function ProfileScreen() {
       </Animated.View>
 
       {/* ── Boxing Style ──────────────────────────────────────────────── */}
-      <Animated.View entering={FadeInDown.duration(400).delay(180)}>
+      <Animated.View>
         <View style={[s.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Text style={[s.sectionTitle, { color: colors.foreground }]}>Boxing Style</Text>
 
@@ -338,7 +338,7 @@ export default function ProfileScreen() {
       </Animated.View>
 
       {/* ── Injuries ─────────────────────────────────────────────────── */}
-      <Animated.View entering={FadeInDown.duration(400).delay(240)}>
+      <Animated.View>
         <View style={[s.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <View style={s.sectionHeaderRow}>
             <Text style={[s.sectionTitle, { color: colors.foreground, marginBottom: 0 }]}>Recent Injuries</Text>
@@ -386,7 +386,7 @@ export default function ProfileScreen() {
         </View>
       </Animated.View>
 
-      <Animated.View entering={FadeInDown.duration(400).delay(300)}>
+      <Animated.View>
         <TouchableOpacity
           style={[s.saveBtn, { backgroundColor: saved ? "#22c55e" : colors.primary }]}
           onPress={handleSave} activeOpacity={0.8}

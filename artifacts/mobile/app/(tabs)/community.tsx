@@ -5,7 +5,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import { useColors } from "@/hooks/useColors";
 import { TabBgImage, TAB_BG_IMAGES } from "@/components/TabBgImage";
 
@@ -131,13 +131,13 @@ export default function CommunityScreen() {
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
       >
-      <Animated.View entering={FadeInDown.duration(400)} style={s.header}>
+      <Animated.View style={s.header}>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Community</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Local gyms, fighter rankings & upcoming events</Text>
       </Animated.View>
 
       {/* Section Tabs */}
-      <Animated.View entering={FadeInDown.duration(400).delay(60)} style={s.segmentWrap}>
+      <Animated.View style={s.segmentWrap}>
         {SECTIONS.map(sec => (
           <TouchableOpacity
             key={sec}
@@ -154,7 +154,7 @@ export default function CommunityScreen() {
 
       {/* ── GYMS ─────────────────────────────────────────────────────────── */}
       {!loading && activeSection === "Gyms" && (
-        <Animated.View entering={FadeInDown.duration(400).delay(100)} style={{ paddingHorizontal: 20 }}>
+        <Animated.View style={{ paddingHorizontal: 20 }}>
           <TextInput
             style={[s.searchInput, { backgroundColor: colors.card, borderColor: colors.border, color: colors.foreground }]}
             placeholder="Search gyms or cities..."
@@ -198,7 +198,7 @@ export default function CommunityScreen() {
 
       {/* ── FIGHTERS ─────────────────────────────────────────────────────── */}
       {!loading && activeSection === "Fighters" && (
-        <Animated.View entering={FadeInDown.duration(400).delay(100)} style={{ paddingHorizontal: 20 }}>
+        <Animated.View style={{ paddingHorizontal: 20 }}>
           {/* Filters */}
           <Text style={[s.filterLabel, { color: colors.mutedForeground }]}>WEIGHT CLASS</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 10 }}>
@@ -307,7 +307,7 @@ export default function CommunityScreen() {
 
       {/* ── TOURNAMENTS ──────────────────────────────────────────────────── */}
       {!loading && activeSection === "Tournaments" && (
-        <Animated.View entering={FadeInDown.duration(400).delay(100)} style={{ paddingHorizontal: 20 }}>
+        <Animated.View style={{ paddingHorizontal: 20 }}>
           {tournaments.map(t => {
             const spots = spotsLeft(t.maxParticipants, t.registeredCount);
             const almostFull = spots !== null && spots < 20;

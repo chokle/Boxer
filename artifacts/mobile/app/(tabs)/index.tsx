@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import Animated, { FadeInDown, FadeInRight } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import { useRouter } from "expo-router";
 import { useColors } from "@/hooks/useColors";
 import { useBoxing } from "@/context/BoxingContext";
@@ -31,7 +31,7 @@ export default function DashboardScreen() {
         contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100, paddingHorizontal: 20 }}
         showsVerticalScrollIndicator={false}
       >
-      <Animated.View entering={FadeInDown.duration(400)}>
+      <Animated.View>
         <View style={s.header}>
           <View>
             <Text style={[s.greeting, { color: colors.mutedForeground }]}>
@@ -51,7 +51,7 @@ export default function DashboardScreen() {
 
       {stats.totalSessions > 0 ? (
         <>
-          <Animated.View entering={FadeInDown.duration(400).delay(80)}>
+          <Animated.View>
             <View style={[s.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
               <View style={s.ringRow}>
                 <ScoreRing score={stats.avgScore} size={110} label="Overall" color={colors.primary} />
@@ -69,7 +69,7 @@ export default function DashboardScreen() {
             </View>
           </Animated.View>
 
-          <Animated.View entering={FadeInDown.duration(400).delay(160)}>
+          <Animated.View>
             <View style={s.statsRow}>
               <StatCard icon="layers" label="Sessions" value={`${stats.totalSessions}`} color={colors.primary} />
               <StatCard icon="award" label="Best" value={`${stats.bestScore}`} color={colors.success} />
@@ -78,22 +78,22 @@ export default function DashboardScreen() {
           </Animated.View>
 
           {sessions.length >= 2 && (
-            <Animated.View entering={FadeInDown.duration(400).delay(220)}>
+            <Animated.View>
               <PerformanceChart sessions={sessions} />
             </Animated.View>
           )}
 
-          <Animated.View entering={FadeInDown.duration(400).delay(280)}>
+          <Animated.View>
             <Text style={[s.sectionTitle, { color: colors.foreground }]}>Recent Sessions</Text>
             {recent.map((session, i) => (
-              <Animated.View key={session.id} entering={FadeInRight.duration(350).delay(300 + i * 60)}>
+              <Animated.View key={session.id}>
                 <SessionCard session={session} onPress={() => router.push(`/session/${session.id}`)} />
               </Animated.View>
             ))}
           </Animated.View>
         </>
       ) : (
-        <Animated.View entering={FadeInDown.duration(500).delay(120)} style={[s.empty, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <Animated.View style={[s.empty, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <MaterialCommunityIcons name="boxing-glove" size={60} color={colors.primary} />
           <Text style={[s.emptyTitle, { color: colors.foreground }]}>Ready to Train?</Text>
           <Text style={[s.emptyText, { color: colors.mutedForeground }]}>

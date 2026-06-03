@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import Animated, { FadeInDown, FadeInRight } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import { useColors } from "@/hooks/useColors";
 import { useBoxing } from "@/context/BoxingContext";
@@ -56,12 +56,12 @@ export default function DrillsScreen() {
         contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100, paddingHorizontal: 20 }}
         showsVerticalScrollIndicator={false}
       >
-      <Animated.View entering={FadeInDown.duration(400)}>
+      <Animated.View>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Training Drills</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Personalized exercises from your match analyses</Text>
       </Animated.View>
 
-      <Animated.View entering={FadeInDown.duration(400).delay(80)}>
+      <Animated.View>
         <View style={s.statsRow}>
           <View style={[s.statBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <Text style={[s.statNum, { color: colors.primary }]}>{active.length}</Text>
@@ -79,7 +79,7 @@ export default function DrillsScreen() {
       </Animated.View>
 
       {allDrills.length === 0 ? (
-        <Animated.View entering={FadeInDown.duration(500).delay(120)} style={[s.empty, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <Animated.View style={[s.empty, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <MaterialCommunityIcons name="boxing-glove" size={52} color={colors.mutedForeground} />
           <Text style={[s.emptyTitle, { color: colors.foreground }]}>No Drills Yet</Text>
           <Text style={[s.emptyText, { color: colors.mutedForeground }]}>Analyze a match to get personalized drill recommendations</Text>
@@ -87,13 +87,13 @@ export default function DrillsScreen() {
       ) : (
         <>
           {active.length > 0 && (
-            <Animated.View entering={FadeInDown.duration(400).delay(160)}>
+            <Animated.View>
               <View style={s.sectionHeader}>
                 <Feather name="circle" size={16} color={colors.primary} />
                 <Text style={[s.sectionTitle, { color: colors.foreground }]}>Active Drills</Text>
               </View>
               {active.map((drill, i) => (
-                <Animated.View key={drill.id} entering={FadeInRight.duration(350).delay(180 + i * 50)}>
+                <Animated.View key={drill.id}>
                   <DrillCard drill={drill} onToggle={() => toggle(drill.sessionId, drill.id, true)} colors={colors} />
                 </Animated.View>
               ))}
@@ -101,13 +101,13 @@ export default function DrillsScreen() {
           )}
 
           {done.length > 0 && (
-            <Animated.View entering={FadeInDown.duration(400).delay(240)}>
+            <Animated.View>
               <View style={s.sectionHeader}>
                 <Feather name="check-circle" size={16} color={colors.success} />
                 <Text style={[s.sectionTitle, { color: colors.foreground }]}>Completed</Text>
               </View>
               {done.map((drill, i) => (
-                <Animated.View key={drill.id} entering={FadeInRight.duration(350).delay(260 + i * 50)}>
+                <Animated.View key={drill.id}>
                   <DrillCard drill={drill} onToggle={() => toggle(drill.sessionId, drill.id, false)} done colors={colors} />
                 </Animated.View>
               ))}

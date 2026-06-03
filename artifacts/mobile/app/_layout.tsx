@@ -11,12 +11,20 @@ import * as SplashScreen from "expo-splash-screen";
 import React, { useCallback, useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
+import { enableScreens } from "react-native-screens";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { setBaseUrl } from "@workspace/api-client-react";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { IntroVideo } from "@/components/IntroVideo";
 import { BoxingProvider } from "@/context/BoxingContext";
+
+// Keep all tab screens mounted so content doesn't re-animate on every switch.
+// react-native-screens sets activityState=0 (STATE_INACTIVE) on unfocused tabs
+// which detaches them even when detachInactiveScreens={false} is set on the
+// navigator. Disabling native screen management makes MaybeScreen fall back to
+// plain Views: all tabs stay in the tree and switching is just a zIndex swap.
+enableScreens(false);
 
 if (process.env.EXPO_PUBLIC_DOMAIN) {
   setBaseUrl(`https://${process.env.EXPO_PUBLIC_DOMAIN}`);

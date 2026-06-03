@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import Animated from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import { useColors } from "@/hooks/useColors";
 import { useBoxing } from "@/context/BoxingContext";
@@ -56,12 +55,12 @@ export default function DrillsScreen() {
         contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100, paddingHorizontal: 20 }}
         showsVerticalScrollIndicator={false}
       >
-      <Animated.View>
+      <View>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Training Drills</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Personalized exercises from your match analyses</Text>
-      </Animated.View>
+      </View>
 
-      <Animated.View>
+      <View>
         <View style={s.statsRow}>
           <View style={[s.statBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <Text style={[s.statNum, { color: colors.primary }]}>{active.length}</Text>
@@ -76,42 +75,42 @@ export default function DrillsScreen() {
             <Text style={[s.statLabel, { color: colors.mutedForeground }]}>Total</Text>
           </View>
         </View>
-      </Animated.View>
+      </View>
 
       {allDrills.length === 0 ? (
-        <Animated.View style={[s.empty, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <View style={[s.empty, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <MaterialCommunityIcons name="boxing-glove" size={52} color={colors.mutedForeground} />
           <Text style={[s.emptyTitle, { color: colors.foreground }]}>No Drills Yet</Text>
           <Text style={[s.emptyText, { color: colors.mutedForeground }]}>Analyze a match to get personalized drill recommendations</Text>
-        </Animated.View>
+        </View>
       ) : (
         <>
           {active.length > 0 && (
-            <Animated.View>
+            <View>
               <View style={s.sectionHeader}>
                 <Feather name="circle" size={16} color={colors.primary} />
                 <Text style={[s.sectionTitle, { color: colors.foreground }]}>Active Drills</Text>
               </View>
               {active.map((drill, i) => (
-                <Animated.View key={drill.id}>
+                <View key={drill.id}>
                   <DrillCard drill={drill} onToggle={() => toggle(drill.sessionId, drill.id, true)} colors={colors} />
-                </Animated.View>
+                </View>
               ))}
-            </Animated.View>
+            </View>
           )}
 
           {done.length > 0 && (
-            <Animated.View>
+            <View>
               <View style={s.sectionHeader}>
                 <Feather name="check-circle" size={16} color={colors.success} />
                 <Text style={[s.sectionTitle, { color: colors.foreground }]}>Completed</Text>
               </View>
               {done.map((drill, i) => (
-                <Animated.View key={drill.id}>
+                <View key={drill.id}>
                   <DrillCard drill={drill} onToggle={() => toggle(drill.sessionId, drill.id, false)} done colors={colors} />
-                </Animated.View>
+                </View>
               ))}
-            </Animated.View>
+            </View>
           )}
         </>
       )}

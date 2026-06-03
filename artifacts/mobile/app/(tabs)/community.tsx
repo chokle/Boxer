@@ -5,7 +5,6 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
-import Animated from "react-native-reanimated";
 import { useColors } from "@/hooks/useColors";
 import { TabBgImage, TAB_BG_IMAGES } from "@/components/TabBgImage";
 
@@ -131,13 +130,13 @@ export default function CommunityScreen() {
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
       >
-      <Animated.View style={s.header}>
+      <View style={s.header}>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Community</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Local gyms, fighter rankings & upcoming events</Text>
-      </Animated.View>
+      </View>
 
       {/* Section Tabs */}
-      <Animated.View style={s.segmentWrap}>
+      <View style={s.segmentWrap}>
         {SECTIONS.map(sec => (
           <TouchableOpacity
             key={sec}
@@ -148,13 +147,13 @@ export default function CommunityScreen() {
             <Text style={[s.segmentText, { color: activeSection === sec ? "#fff" : colors.mutedForeground }]}>{sec}</Text>
           </TouchableOpacity>
         ))}
-      </Animated.View>
+      </View>
 
       {loading && <ActivityIndicator color={colors.primary} style={{ marginTop: 40 }} />}
 
       {/* ── GYMS ─────────────────────────────────────────────────────────── */}
       {!loading && activeSection === "Gyms" && (
-        <Animated.View style={{ paddingHorizontal: 20 }}>
+        <View style={{ paddingHorizontal: 20 }}>
           <TextInput
             style={[s.searchInput, { backgroundColor: colors.card, borderColor: colors.border, color: colors.foreground }]}
             placeholder="Search gyms or cities..."
@@ -193,12 +192,12 @@ export default function CommunityScreen() {
           {filteredGyms.length === 0 && (
             <Text style={[s.empty, { color: colors.mutedForeground }]}>No gyms found</Text>
           )}
-        </Animated.View>
+        </View>
       )}
 
       {/* ── FIGHTERS ─────────────────────────────────────────────────────── */}
       {!loading && activeSection === "Fighters" && (
-        <Animated.View style={{ paddingHorizontal: 20 }}>
+        <View style={{ paddingHorizontal: 20 }}>
           {/* Filters */}
           <Text style={[s.filterLabel, { color: colors.mutedForeground }]}>WEIGHT CLASS</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 10 }}>
@@ -302,12 +301,12 @@ export default function CommunityScreen() {
           {fighters.length === 0 && !loading && (
             <Text style={[s.empty, { color: colors.mutedForeground }]}>No fighters found</Text>
           )}
-        </Animated.View>
+        </View>
       )}
 
       {/* ── TOURNAMENTS ──────────────────────────────────────────────────── */}
       {!loading && activeSection === "Tournaments" && (
-        <Animated.View style={{ paddingHorizontal: 20 }}>
+        <View style={{ paddingHorizontal: 20 }}>
           {tournaments.map(t => {
             const spots = spotsLeft(t.maxParticipants, t.registeredCount);
             const almostFull = spots !== null && spots < 20;
@@ -379,7 +378,7 @@ export default function CommunityScreen() {
           {tournaments.length === 0 && (
             <Text style={[s.empty, { color: colors.mutedForeground }]}>No upcoming tournaments</Text>
           )}
-        </Animated.View>
+        </View>
       )}
       </ScrollView>
     </View>

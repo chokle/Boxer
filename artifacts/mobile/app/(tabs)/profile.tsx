@@ -5,7 +5,6 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
-import Animated from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import { useColors } from "@/hooks/useColors";
 import { useBoxing } from "@/context/BoxingContext";
@@ -188,13 +187,13 @@ export default function ProfileScreen() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-      <Animated.View>
+      <View>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Boxer Profile</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Your stats improve AI coaching accuracy</Text>
-      </Animated.View>
+      </View>
 
       {sessions.length > 0 && (
-        <Animated.View>
+        <View>
           <View style={[s.statsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <StatItem label="Sessions" value={`${sessions.length}`} colors={colors} />
             <Divider colors={colors} />
@@ -204,11 +203,11 @@ export default function ProfileScreen() {
             <Divider colors={colors} />
             <StatItem label="Best" value={`${Math.max(...sessions.map(s => s.analysis.overall_score))}`} colors={colors} />
           </View>
-        </Animated.View>
+        </View>
       )}
 
       {/* ── Personal Info ─────────────────────────────────────────────── */}
-      <Animated.View>
+      <View>
         <View style={[s.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Text style={[s.sectionTitle, { color: colors.foreground }]}>Personal Info</Text>
 
@@ -273,7 +272,7 @@ export default function ProfileScreen() {
 
           {/* BMI Display */}
           {bmi !== null && (
-            <Animated.View style={[s.bmiCard, {
+            <View style={[s.bmiCard, {
               backgroundColor: `${SEVERITY_COLORS[bmiCategory(bmi) === "Normal" ? "Mild" : bmiCategory(bmi) === "Overweight" ? "Moderate" : "Severe"]}15`,
               borderColor: `${SEVERITY_COLORS[bmiCategory(bmi) === "Normal" ? "Mild" : bmiCategory(bmi) === "Overweight" ? "Moderate" : "Severe"]}40`,
             }]}>
@@ -292,13 +291,13 @@ export default function ProfileScreen() {
                    "Significant impact on performance — consult coach"}
                 </Text>
               </View>
-            </Animated.View>
+            </View>
           )}
         </View>
-      </Animated.View>
+      </View>
 
       {/* ── Boxing Style ──────────────────────────────────────────────── */}
-      <Animated.View>
+      <View>
         <View style={[s.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Text style={[s.sectionTitle, { color: colors.foreground }]}>Boxing Style</Text>
 
@@ -335,10 +334,10 @@ export default function ProfileScreen() {
             ))}
           </View>
         </View>
-      </Animated.View>
+      </View>
 
       {/* ── Injuries ─────────────────────────────────────────────────── */}
-      <Animated.View>
+      <View>
         <View style={[s.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <View style={s.sectionHeaderRow}>
             <Text style={[s.sectionTitle, { color: colors.foreground, marginBottom: 0 }]}>Recent Injuries</Text>
@@ -384,9 +383,9 @@ export default function ProfileScreen() {
             ))
           )}
         </View>
-      </Animated.View>
+      </View>
 
-      <Animated.View>
+      <View>
         <TouchableOpacity
           style={[s.saveBtn, { backgroundColor: saved ? "#22c55e" : colors.primary }]}
           onPress={handleSave} activeOpacity={0.8}
@@ -394,7 +393,7 @@ export default function ProfileScreen() {
           <Feather name={saved ? "check" : "save"} size={18} color="#fff" />
           <Text style={s.saveBtnText}>{saved ? "Saved!" : "Save Profile"}</Text>
         </TouchableOpacity>
-      </Animated.View>
+      </View>
 
       {/* ── Add Injury Modal ─────────────────────────────────────────── */}
       <Modal visible={injuryModalVisible} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setInjuryModalVisible(false)}>

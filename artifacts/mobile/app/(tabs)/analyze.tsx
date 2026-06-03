@@ -5,7 +5,6 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
-import Animated from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
@@ -220,12 +219,12 @@ export default function AnalyzeScreen() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-      <Animated.View>
+      <View>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Analyze Match</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Describe your match for instant AI coaching feedback</Text>
-      </Animated.View>
+      </View>
 
-      <Animated.View>
+      <View>
         <View style={[s.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Label text="SESSION TITLE" colors={colors} />
           <TextInput
@@ -243,9 +242,9 @@ export default function AnalyzeScreen() {
             value={description} onChangeText={setDescription}
           />
         </View>
-      </Animated.View>
+      </View>
 
-      <Animated.View>
+      <View>
         <View style={[s.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Label text="MATCH TYPE" colors={colors} />
           <View style={s.chipRow}>
@@ -273,9 +272,9 @@ export default function AnalyzeScreen() {
             ))}
           </View>
         </View>
-      </Animated.View>
+      </View>
 
-      <Animated.View>
+      <View>
         <View style={[s.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 6, marginBottom: 6 }}>
             <Label text="MATCH SUMMARY" colors={colors} style={{ marginBottom: 0 }} />
@@ -290,9 +289,9 @@ export default function AnalyzeScreen() {
             multiline numberOfLines={6} textAlignVertical="top"
           />
         </View>
-      </Animated.View>
+      </View>
 
-      <Animated.View>
+      <View>
         <View style={[s.section, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <View style={s.mediaHeader}>
             <Label text="PHOTOS & VIDEOS" colors={colors} style={{ marginBottom: 0 }} />
@@ -348,9 +347,9 @@ export default function AnalyzeScreen() {
             </TouchableOpacity>
           )}
         </View>
-      </Animated.View>
+      </View>
 
-      <Animated.View>
+      <View>
         <TouchableOpacity
           style={[s.analyzeBtn, { backgroundColor: analyzing ? colors.muted : colors.primary }]}
           onPress={handleAnalyze} disabled={analyzing} activeOpacity={0.8}
@@ -360,7 +359,7 @@ export default function AnalyzeScreen() {
             Analyze with AI
           </Text>
         </TouchableOpacity>
-      </Animated.View>
+      </View>
       </ScrollView>
     </View>
   );

@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useCallback, useEffect, useState } from "react";
+import { Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { enableScreens } from "react-native-screens";
@@ -55,9 +56,17 @@ function writeIntroDone(): void {
   }
 }
 
+const WEB_BG = "#0a0a0a";
+
 function RootLayoutNav() {
   return (
-    <Stack screenOptions={{ headerBackTitle: "Back", headerShown: false }}>
+    <Stack
+      screenOptions={{
+        headerBackTitle: "Back",
+        headerShown: false,
+        contentStyle: { backgroundColor: WEB_BG },
+      }}
+    >
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
         name="session/[id]"
@@ -87,6 +96,14 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
+
+  useEffect(() => {
+    if (Platform.OS !== "web") return;
+    const root = document.documentElement;
+    root.style.backgroundColor = WEB_BG;
+    document.body.style.backgroundColor = WEB_BG;
+    document.body.style.overflow = "hidden";
+  }, []);
 
   if (!fontsLoaded && !fontError) return null;
 

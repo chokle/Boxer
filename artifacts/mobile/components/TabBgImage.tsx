@@ -16,7 +16,7 @@ interface TabBgImageProps {
 
 export function TabBgImage({ uri }: TabBgImageProps) {
   return (
-    <View style={StyleSheet.absoluteFill} pointerEvents="none">
+    <View style={[StyleSheet.absoluteFill, styles.bgFallback]} pointerEvents="none">
       <Image
         source={{ uri }}
         style={StyleSheet.absoluteFill}
@@ -29,6 +29,9 @@ export function TabBgImage({ uri }: TabBgImageProps) {
 }
 
 const styles = StyleSheet.create({
+  bgFallback: {
+    backgroundColor: "#0a0a0a",
+  },
   scrim: {
     backgroundColor: "rgba(0,0,0,0.62)",
   },

@@ -1,0 +1,2 @@
+- [Intro replay on web](intro-replay-web.md) — two-layer sessionStorage guard needed to prevent intro replaying on tab switch
+- [Tab re-animation on web](tab-reanimation-web.md) — Reanimated Animated.View injects CSS transitions on web even without entering props; must use plain View in tab screens

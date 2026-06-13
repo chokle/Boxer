@@ -34,9 +34,26 @@ SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
 
-// Module-level flag so the intro never replays if RootLayout re-mounts
-// (e.g. on web tab switches where the Stack re-mounts the root).
-let _introDone = false;
+// Persist intro-done across module re-evaluations (web) and React remounts.
+// sessionStorage survives tab switches & HMR reloads; falls back to a
+// module-level flag for native (no sessionStorage).
+const INTRO_KEY = 'boxer_ai_intro_done';
+
+function readIntroDone(): boolean {
+  if (typeof window !== 'undefined') {
+    const stored = window.sessionStorage?.getItem(INTRO_KEY);
+    console.log('[IntroGuard] readIntroDone =', stored);
+    return stored === '1';
+  }
+  return false;
+}
+
+function writeIntroDone(): void {
+  if (typeof window !== 'undefined') {
+    window.sessionStorage?.setItem(INTRO_KEY, '1');
+    console.log('[IntroGuard] writeIntroDone done');
+  }
+}
 
 function RootLayoutNav() {
   return (
@@ -58,10 +75,10 @@ export default function RootLayout() {
     Inter_700Bold,
   });
 
-  const [introDone, setIntroDone] = useState(_introDone);
+  const [introDone, setIntroDone] = useState(() => readIntroDone());
 
   const handleIntroFinish = useCallback(() => {
-    _introDone = true;
+    writeIntroDone();
     setIntroDone(true);
   }, []);
 

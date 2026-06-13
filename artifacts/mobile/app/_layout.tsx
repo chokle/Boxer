@@ -34,6 +34,10 @@ SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
 
+// Module-level flag so the intro never replays if RootLayout re-mounts
+// (e.g. on web tab switches where the Stack re-mounts the root).
+let _introDone = false;
+
 function RootLayoutNav() {
   return (
     <Stack screenOptions={{ headerBackTitle: "Back", headerShown: false }}>
@@ -54,9 +58,10 @@ export default function RootLayout() {
     Inter_700Bold,
   });
 
-  const [introDone, setIntroDone] = useState(false);
+  const [introDone, setIntroDone] = useState(_introDone);
 
   const handleIntroFinish = useCallback(() => {
+    _introDone = true;
     setIntroDone(true);
   }, []);
 

@@ -24,6 +24,25 @@ const TITLE_DELAY = 600;
 const TITLE_DURATION = 800;
 const SAFETY_TIMEOUT_MS = 8000;
 
+const INTRO_KEY = "boxer_ai_intro_done";
+
+function introDoneInStorage(): boolean {
+  try {
+    return typeof window !== "undefined" &&
+      window.sessionStorage?.getItem(INTRO_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function markIntroDoneInStorage(): void {
+  try {
+    if (typeof window !== "undefined") {
+      window.sessionStorage?.setItem(INTRO_KEY, "1");
+    }
+  } catch {}
+}
+
 const PUNCH_IMAGE = require("@/assets/images/intro-punch.png");
 
 interface IntroVideoProps {
@@ -42,6 +61,7 @@ export function IntroVideo({ onFinish }: IntroVideoProps) {
   const handleFinish = () => {
     if (finishedRef.current) return;
     finishedRef.current = true;
+    markIntroDoneInStorage();
     overlayOpacity.value = withTiming(
       0,
       { duration: FADE_OUT_DURATION, easing: Easing.out(Easing.cubic) },
@@ -52,7 +72,13 @@ export function IntroVideo({ onFinish }: IntroVideoProps) {
   };
 
   useEffect(() => {
-    // Animate title in
+    // Layer 2: if this component ever mounts after the intro was already shown
+    // (e.g. parent re-mounted and reset its state), dismiss instantly.
+    if (introDoneInStorage()) {
+      onFinish();
+      return;
+    }
+
     titleOpacity.value = withDelay(
       TITLE_DELAY,
       withTiming(1, { duration: TITLE_DURATION, easing: Easing.out(Easing.cubic) })
@@ -61,10 +87,8 @@ export function IntroVideo({ onFinish }: IntroVideoProps) {
       TITLE_DELAY,
       withTiming(0, { duration: TITLE_DURATION, easing: Easing.out(Easing.cubic) })
     );
-    // Skip button fades in after 1.5 s
     skipOpacity.value = withDelay(1500, withTiming(1, { duration: 500 }));
 
-    // Auto-advance after hold
     const timer = setTimeout(handleFinish, HOLD_MS);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,6 +96,7 @@ export function IntroVideo({ onFinish }: IntroVideoProps) {
 
   // Safety net
   useEffect(() => {
+    if (introDoneInStorage()) return;
     const timeout = setTimeout(handleFinish, SAFETY_TIMEOUT_MS);
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,12 +109,14 @@ export function IntroVideo({ onFinish }: IntroVideoProps) {
   }));
   const skipStyle = useAnimatedStyle(() => ({ opacity: skipOpacity.value }));
 
+  // Layer 2 (render guard): already shown → render nothing while parent catches up
+  if (introDoneInStorage()) return null;
+
   return (
     <Animated.View
       style={[StyleSheet.absoluteFill, styles.container, overlayStyle]}
       pointerEvents="auto"
     >
-      {/* Full-bleed knockout punch image */}
       <Image
         source={PUNCH_IMAGE}
         style={StyleSheet.absoluteFill}
@@ -97,15 +124,11 @@ export function IntroVideo({ onFinish }: IntroVideoProps) {
         transition={0}
         cachePolicy="memory"
       />
-
-      {/* Dark vignette gradient so text is legible */}
       <LinearGradient
         colors={["rgba(0,0,0,0.6)", "rgba(0,0,0,0.1)", "rgba(0,0,0,0.9)"]}
         locations={[0, 0.45, 1]}
         style={StyleSheet.absoluteFill}
       />
-
-      {/* Brand + tagline */}
       <View style={[styles.bottom, { paddingBottom: insets.bottom + 56 }]}>
         <Animated.View style={titleStyle}>
           <Text style={styles.brandLabel}>BOXER · AI</Text>
@@ -115,8 +138,6 @@ export function IntroVideo({ onFinish }: IntroVideoProps) {
           </Text>
         </Animated.View>
       </View>
-
-      {/* Skip button */}
       <Animated.View
         style={[
           styles.skipWrap,

@@ -67,7 +67,7 @@ function ClassicTabLayout() {
           tabBarActiveTintColor: colors.primary,
           tabBarInactiveTintColor: colors.mutedForeground,
           headerShown: false,
-          contentStyle: { backgroundColor: "#0a0a0a" },
+          sceneStyle: { backgroundColor: "#0a0a0a" },
           tabBarStyle: {
             position: "absolute",
             backgroundColor: isIOS ? "transparent" : colors.background,

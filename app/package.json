@@ -35,5 +35,8 @@
     "web": "expo start --web",
     "lint": "expo lint"
   },
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "overrides": {
+    "react-dom": "19.1.0"
+  }
 }

@@ -1,0 +1,1104 @@
+[
+  {
+    "id": "stance-hold-mirror",
+    "title": "Mirror Stance Hold",
+    "category": "stance",
+    "instructions": [
+      "Stand facing a full-length mirror with feet shoulder-width apart.",
+      "Step your lead foot forward and your rear foot back about one shoulder-width, rear foot turned out roughly 45 degrees.",
+      "Bend your knees slightly and settle your weight onto the balls of both feet, posture tall.",
+      "Raise your hands to guard and hold the position for 60 seconds without shifting your feet.",
+      "Check the mirror: hips and shoulders half-turned to the target, not fully square and not fully sideways.",
+      "Rest 30 seconds and repeat for 3 holds, resetting your feet from scratch each time."
+    ],
+    "sets_reps": "3 x 60-second holds",
+    "coaching_points": [
+      "Tall spine, chin tucked, eyes level — don't crouch to feel stable",
+      "Weight balanced and ready to move either direction, not planted",
+      "Breathe normally; tension in the shoulders means you're forcing it"
+    ],
+    "targets_faults": ["square-stance", "weight-forward", "weight-back"],
+    "difficulty": "beginner",
+    "equipment": "mirror"
+  },
+  {
+    "id": "tape-line-reset",
+    "title": "Tape Line Stance Reset",
+    "category": "stance",
+    "instructions": [
+      "Lay two strips of tape on the floor, parallel, about shoulder-width apart.",
+      "Start in your stance with each foot on its line.",
+      "Step-drag forward three steps, keeping each foot tracking along its own line.",
+      "Step-drag back to the start, then step-drag laterally left and right the same way.",
+      "After every direction change, freeze and check: feet back on the lines, stance width unchanged.",
+      "Work for 3 minutes, resetting to the taped stance whenever your feet drift."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "The step-drag keeps your base identical after every move",
+      "If your feet leave the lines, your steps are too big",
+      "Finish every movement in a stance you could punch from"
+    ],
+    "targets_faults": ["square-stance", "wide-stance", "crossing-feet"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "balance-push-test",
+    "title": "Partner Balance Push Test",
+    "category": "stance",
+    "instructions": [
+      "Take your boxing stance; a partner stands in front of you.",
+      "The partner gives your lead shoulder a firm, slow push — a steady press, not a shove.",
+      "Absorb it without stepping, hopping, or straightening your legs.",
+      "Repeat with pushes to the rear shoulder and to each side.",
+      "If you lose balance, adjust your stance (usually: sink lower, weight centered) and try again.",
+      "Do 30 seconds of pushes from each of the four directions."
+    ],
+    "sets_reps": "4 x 30 seconds (one per direction)",
+    "coaching_points": [
+      "A good stance absorbs pressure; a bad one topples or bounces",
+      "Knees stay soft and springy, never locked",
+      "If you consistently fall forward, your weight is too far over your lead foot"
+    ],
+    "targets_faults": ["stance-drifts", "weight-forward"],
+    "difficulty": "intermediate",
+    "equipment": "none"
+  },
+  {
+    "id": "stance-with-punches",
+    "title": "Slow 1-2 Stance Check",
+    "category": "stance",
+    "instructions": [
+      "Face a partner or mirror in your stance.",
+      "Throw a slow jab-cross at half speed, then freeze fully at the end of the cross.",
+      "Check your feet: same stance width and angles as before the punches, weight centered.",
+      "Return to guard slowly, then repeat — 10 reps, then switch to a slow 1-2-3.",
+      "Have the partner call out any foot that lifted, slid, or turned during the punches.",
+      "Finish with 1 minute of continuous slow 1-2s, freezing at random on the partner's clap."
+    ],
+    "sets_reps": "3 x 2-minute rounds",
+    "coaching_points": [
+      "Punches should not move your foundation; power comes through it, not from leaving it",
+      "Rear foot pivots on the cross but stays grounded — no lifting",
+      "If your stance widens every combo, you're pushing off instead of rotating"
+    ],
+    "targets_faults": ["square-stance", "weight-forward"],
+    "difficulty": "intermediate",
+    "equipment": "none"
+  },
+  {
+    "id": "three-minute-stance",
+    "title": "Three-Minute Stance Discipline",
+    "category": "stance",
+    "instructions": [
+      "Set a timer for one 3-minute round and take your stance.",
+      "Every 30 seconds, throw a crisp 1-2-3 combination and immediately reset to your exact starting stance.",
+      "Between combinations, make small step-drag adjustments only — never stand up or widen out to rest.",
+      "In the final minute, add pivots after each combination while keeping the stance intact.",
+      "When the round ends, note when your legs wanted to quit: that's the habit to train out.",
+      "Build to 3 full rounds with 1-minute rests."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "Fatigue reveals stance flaws — this drill trains the stance to survive them",
+      "Rest by narrowing slightly and breathing, never by standing tall",
+      "Your guard and stance are one system; both must last the round"
+    ],
+    "targets_faults": ["stance-drifts", "weight-back"],
+    "difficulty": "advanced",
+    "equipment": "none"
+  },
+  {
+    "id": "snap-back-guard",
+    "title": "Jab Snap-Back in the Mirror",
+    "category": "guard",
+    "instructions": [
+      "Face a mirror in your stance at jab range from your reflection.",
+      "Throw a slow, full-extension jab, watching your lead hand travel straight out and back.",
+      "Snap the hand back along the exact same path to your cheek — as fast as it went out.",
+      "Freeze for one beat with the glove touching your cheekbone and check: rear hand never moved.",
+      "Repeat for 2 minutes, then do 1 minute where every third jab is a double jab, both hands returning cleanly.",
+      "Finish with 30 seconds of full-speed jabs, guard return still instant."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "The punch is only half the technique; the return is the other half",
+      "A lazy return after the jab is the most common way beginners get countered",
+      "Elbow stays tucked on the return, not flared out"
+    ],
+    "targets_faults": ["drops-guard-on-jab", "hands-low"],
+    "difficulty": "beginner",
+    "equipment": "mirror"
+  },
+  {
+    "id": "chin-ball-shadowbox",
+    "title": "Tennis Ball Chin Shadowboxing",
+    "category": "guard",
+    "instructions": [
+      "Tuck a tennis ball (or rolled-up sock) under your chin, holding it against your chest with your jaw.",
+      "Shadowbox for 2 minutes: jabs, crosses, hooks, footwork — everything.",
+      "If the ball drops, stop, reset it, and continue; count your drops.",
+      "Round two: add head movement — slips and rolls — without losing the ball.",
+      "Goal is zero drops by the third session, not the first.",
+      "Finish with 1 minute of fast combinations, chin still pinned down."
+    ],
+    "sets_reps": "3 x 2-minute rounds",
+    "coaching_points": [
+      "Chin down, eyes up — you watch the opponent over your guard, not from under it",
+      "A lifting chin when punching is a knockout invitation",
+      "Keep the jaw relaxed; clenching the ball creates shoulder tension"
+    ],
+    "targets_faults": ["chin-up", "hands-low"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "guard-check-freeze",
+    "title": "Freeze Guard Check",
+    "category": "guard",
+    "instructions": [
+      "Shadowbox freely while a partner watches (or set a timer to beep every 20 seconds).",
+      "On the call or beep, freeze instantly — mid-punch, mid-step, wherever you are.",
+      "Check three things: knuckles at cheekbone height, elbows touching your ribs, chin tucked.",
+      "Score yourself: 3/3 is a pass; anything less, do 10 push-ups and continue.",
+      "Work for 3 minutes; the freezes should catch you in honest positions, not posed ones.",
+      "Advanced version: partner calls freeze only right after your combinations, when guards sag most."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "Your guard at the freeze is your real guard — the rest is wishful thinking",
+      "Elbows protect the body; flared elbows open the ribs and telegraph fatigue",
+      "Gloves cover the chin, not the eyes — you must see through your guard"
+    ],
+    "targets_faults": ["hands-low", "elbows-out"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "towel-elbow-pin",
+    "title": "Towel Pin Elbow Drill",
+    "category": "guard",
+    "instructions": [
+      "Fold a small towel and wedge it between your rear upper arm and your ribs.",
+      "Throw slow crosses for 2 minutes without letting the towel fall.",
+      "The cross must come from hip and shoulder rotation — if your elbow wings out, the towel drops.",
+      "Switch the towel to the lead side and throw slow lead hooks the same way.",
+      "Final minute: alternate cross and lead hook, towel pinned on each side in turn.",
+      "When you can do 3 minutes clean, the elbow discipline is becoming automatic."
+    ],
+    "sets_reps": "3 x 2-minute rounds",
+    "coaching_points": [
+      "Elbows-out on the cross bleeds power and opens your body",
+      "Rotate the torso to deliver the punch, don't reach with the arm",
+      "Rear hand returns to the cheek every time — the towel only tests the elbow"
+    ],
+    "targets_faults": ["elbows-out", "drops-guard-on-cross"],
+    "difficulty": "intermediate",
+    "equipment": "none"
+  },
+  {
+    "id": "shell-coverage",
+    "title": "Shell Coverage Under Taps",
+    "category": "guard",
+    "instructions": [
+      "Take a high guard: gloves at temples/forehead, elbows tight to the body, chin tucked.",
+      "A partner wearing gloves taps lightly at your guard — head, sides, body — for 60 seconds.",
+      "Don't punch back; just maintain the shell, keep your eyes open, and breathe.",
+      "Between taps, the partner occasionally pauses — don't drop your hands in the pause.",
+      "Rest 30 seconds and repeat for 4 rounds, with the partner varying speed and angle.",
+      "Final round: you may step and pivot while shelling, but the coverage never opens."
+    ],
+    "sets_reps": "4 x 60 seconds",
+    "coaching_points": [
+      "Eyes open and breathing — beginners hold their breath and look away",
+      "A tight shell is forearms and gloves, not hunched shoulders",
+      "The pause is the test: tired fighters drop their hands the moment pressure stops"
+    ],
+    "targets_faults": ["hands-low", "dropping-hands-under-pressure"],
+    "difficulty": "intermediate",
+    "equipment": "none"
+  },
+  {
+    "id": "guard-on-the-move",
+    "title": "Guard Integrity Footwork Round",
+    "category": "guard",
+    "instructions": [
+      "Set a 3-minute timer. You'll move continuously — no punching in this drill.",
+      "Step-drag forward, back, and laterally; add pivots and direction changes on your own rhythm.",
+      "Your gloves do not leave your cheekbones for the entire round — not during pivots, not during quick steps.",
+      "A partner randomly calls single punches ('jab!', 'hook!'); mime the block or parry and snap straight back to guard.",
+      "If a glove drops below chin level at any point, restart the round.",
+      "Build to 3 consecutive clean rounds."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "Footwork and guard are trained together because they fail together",
+      "Fast feet make hands lazy — this drill breaks that link",
+      "The mime-block must be small; big defensive motions open bigger holes"
+    ],
+    "targets_faults": ["hands-low", "dropping-hands-under-pressure"],
+    "difficulty": "advanced",
+    "equipment": "none"
+  },
+  {
+    "id": "wall-jab-range",
+    "title": "Wall Jab Range Finder",
+    "category": "punch-mechanics",
+    "instructions": [
+      "Stand facing a wall at full arm's length plus one fist — mark the spot with tape.",
+      "Throw slow jabs at a small target on the wall (a taped X at chin height).",
+      "The jab must land with a fully extended arm while your torso stays upright — no leaning in.",
+      "If you can't reach without leaning, you're too far: adjust your starting distance, not your posture.",
+      "Do 3 minutes of slow jabs, then 1 minute stepping in with the jab and stepping back out.",
+      "Your head should finish every jab exactly where it started."
+    ],
+    "sets_reps": "4 x 1-minute segments",
+    "coaching_points": [
+      "Overreaching shifts your weight past your lead foot and kills your balance",
+      "The shoulder extends to deliver the jab; the spine stays stacked",
+      "Judge distance with the jab — it's your measuring stick, not a lunge"
+    ],
+    "targets_faults": ["overreaching-jab", "falling-in"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "step-jab-entry",
+    "title": "Step-In Jab Timing",
+    "category": "punch-mechanics",
+    "instructions": [
+      "Start in your stance, well out of jab range from a heavy bag or wall target.",
+      "Step-drag forward and let the jab land at the exact moment your lead foot plants.",
+      "Step back out to your starting spot; reset fully.",
+      "Repeat for 2 minutes slow, focusing on the foot-hand landing sync.",
+      "Next 2 minutes: vary it — sometimes step in without punching (feint the entry), sometimes double up the jab on the step.",
+      "The punch and the step are one movement, not two stacked together."
+    ],
+    "sets_reps": "2 x 2-minute rounds",
+    "coaching_points": [
+      "Landing the punch as the foot plants puts your body weight behind it",
+      "Stepping then punching is late; punching then stepping is a reach — sync them",
+      "Keep the rear hand glued to your cheek through the entire entry"
+    ],
+    "targets_faults": ["overreaching-jab", "arm-punching"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "cross-pivot-freeze",
+    "title": "Cross Pivot Freeze in the Mirror",
+    "category": "punch-mechanics",
+    "instructions": [
+      "Face a mirror in your stance.",
+      "Throw a slow cross: pivot the rear foot, rotate the hips, then the shoulders, arm extending last.",
+      "Freeze at full extension for 2 seconds and check the mirror: rear heel turned, hips and shoulders rotated, chin behind the lead shoulder.",
+      "Slowly retract along the same path; rear hand returns to the cheek.",
+      "Do 10 slow reps, then 1 minute of continuous slow crosses with a freeze every fifth one.",
+      "Finish with 30 seconds at moderate speed — the rotation pattern must survive the speed."
+    ],
+    "sets_reps": "3 x 2-minute rounds",
+    "coaching_points": [
+      "Power travels ground to fist: foot pivot, hip turn, shoulder turn, then arm",
+      "An arm-only cross is a push — rotation is what makes it a punch",
+      "The chin stays down through the whole rotation; lifting it is the classic cross mistake"
+    ],
+    "targets_faults": ["no-hip-rotation", "arm-punching"],
+    "difficulty": "beginner",
+    "equipment": "mirror"
+  },
+  {
+    "id": "hook-geometry-mirror",
+    "title": "Lead Hook Geometry",
+    "category": "punch-mechanics",
+    "instructions": [
+      "Face a mirror in your stance, lead side toward the mirror.",
+      "Throw a slow lead hook: pivot the lead foot, rotate the hips, arm bent at roughly 90 degrees.",
+      "Freeze at the contact point — check: elbow level with the fist, shoulder touching your chin, rear glove still on your cheek.",
+      "The punch travels on a tight arc, ending in front of your own chin line — never swung wide past it.",
+      "Do 10 slow reps, then 2 minutes of slow hooks with full freezes.",
+      "If your elbow drops below your fist, shorten the arc until the 90-degree bend holds."
+    ],
+    "sets_reps": "3 x 2-minute rounds",
+    "coaching_points": [
+      "A 90-degree elbow keeps the hook short, fast, and structurally strong",
+      "The lead shoulder ends at the chin — it becomes part of your guard",
+      "Wide looping hooks are slow and visible; tight hooks land first"
+    ],
+    "targets_faults": ["elbow-flare", "dropping-rear-hand-on-hook"],
+    "difficulty": "beginner",
+    "equipment": "mirror"
+  },
+  {
+    "id": "dip-uppercut",
+    "title": "Dip-and-Drive Uppercut",
+    "category": "punch-mechanics",
+    "instructions": [
+      "Stand in your stance in front of a mirror or bag.",
+      "Bend your knees 3-4 inches — a small dip, not a squat — keeping your back straight and chin down.",
+      "Drive upward: legs extend, hips rotate, and the punch travels straight up the center line, palm facing up.",
+      "The power comes from the leg drive and rotation; the arm just delivers it.",
+      "Freeze at the top: fist at chin height of an imaginary opponent, elbow still bent, other hand on your cheek.",
+      "Do 3 x 1-minute rounds alternating lead and rear uppercuts, slow first round, moderate after."
+    ],
+    "sets_reps": "3 x 1-minute rounds",
+    "coaching_points": [
+      "No dip, no uppercut — arm-only uppercuts have nothing behind them",
+      "Keep the punch tight to your center; wide uppercuts miss and expose you",
+      "Don't drop the punching hand before throwing — that's a telegraph, not a wind-up"
+    ],
+    "targets_faults": ["arm-punching", "no-hip-rotation"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "one-two-freeze",
+    "title": "1-2 Freeze Balance Check",
+    "category": "punch-mechanics",
+    "instructions": [
+      "In your stance, throw a 1-2 at half speed and freeze with the cross fully extended.",
+      "Hold 2 seconds and audit: weight centered between the feet, head behind the lead shoulder, rear foot pivoted but grounded.",
+      "Slowly return to stance; repeat 10 times.",
+      "Next round: have a partner watch for telegraphs — shoulder dips, hand pulls, weight shifts before the punches.",
+      "Eliminate one telegraph at a time: the 1-2 should look identical to your guard until the punches fire.",
+      "Finish with 1 minute of continuous 1-2s at moderate speed, freezing on a random clap."
+    ],
+    "sets_reps": "3 x 2-minute rounds",
+    "coaching_points": [
+      "If you're off balance at the freeze, the punches were thrown with a lunge, not rotation",
+      "Telegraphs are habits, not necessities — film yourself if no partner is available",
+      "Every punch starts and ends in the same stance; the stance is home base"
+    ],
+    "targets_faults": ["falling-in", "telegraphing"],
+    "difficulty": "intermediate",
+    "equipment": "none"
+  }
+  ,
+  {
+    "id": "hook-off-the-jab-bag",
+    "title": "Hook Off the Jab (Heavy Bag)",
+    "category": "punch-mechanics",
+    "instructions": [
+      "Work the heavy bag at jab range for a 3-minute round.",
+      "Every combination starts with a jab; the lead hook follows it — jab-hook, jab-jab-hook.",
+      "The hook must pivot the lead foot and rotate the hips — no arm swings.",
+      "After each hook, the hand snaps back to the cheek before anything else happens.",
+      "Round two: add the cross between them — jab-cross-hook — keeping the same hip rotation on every punch.",
+      "Count clean hooks per round; raise the count each session without losing form."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "The jab occupies the guard; the hook exploits the opening it creates",
+      "Hook power is hip rotation, not arm speed — pivot hard on the lead foot",
+      "Return the hook to the cheek fast; the follow-through is where counters land"
+    ],
+    "targets_faults": ["no-hip-rotation", "single-punches-only"],
+    "difficulty": "intermediate",
+    "equipment": "bag"
+  },
+  {
+    "id": "power-ladder-singles",
+    "title": "Single-Punch Power Ladder",
+    "category": "punch-mechanics",
+    "instructions": [
+      "Face the heavy bag in your stance.",
+      "Throw ONE jab with full technique — step, rotation, snap — then fully reset to stance.",
+      "Throw ONE cross with full rotation and pivot, then reset.",
+      "Continue through lead hook, rear hook, lead uppercut, rear uppercut: 10 perfect singles each.",
+      "Rest 1 minute, then repeat the ladder at slightly higher speed — technique must not decay.",
+      "If a punch feels weak, slow down: this drill rewards mechanics, not output."
+    ],
+    "sets_reps": "2 ladders of 60 punches",
+    "coaching_points": [
+      "Isolating single punches exposes which ones are arm punches in disguise",
+      "The full reset between punches builds the habit of returning to stance",
+      "Power is technique expressed fast — earn the speed with clean slow reps first"
+    ],
+    "targets_faults": ["arm-punching", "no-hip-rotation"],
+    "difficulty": "intermediate",
+    "equipment": "bag"
+  },
+  {
+    "id": "double-end-timing",
+    "title": "Double-End Bag Timing",
+    "category": "punch-mechanics",
+    "instructions": [
+      "Work the double-end bag for 3-minute rounds.",
+      "Punch the bag as it rebounds toward you — meet it, don't chase it.",
+      "Focus on snap: fist out and back in a blink, faster than the bag's return.",
+      "Throw only when the timing is right; waiting for the moment is part of the drill.",
+      "Add slips: after each combination, slip the imaginary counter as the bag comes back.",
+      "Build from 2 rounds to 4 as your timing sharpens."
+    ],
+    "sets_reps": "4 x 3-minute rounds",
+    "coaching_points": [
+      "The double-end bag punishes pushing — only snapped punches control it",
+      "Timing beats speed; a well-timed punch lands while a fast wild one misses",
+      "Keep your eyes on the bag through the whole exchange, especially while slipping"
+    ],
+    "targets_faults": ["no-snap", "telegraphing"],
+    "difficulty": "advanced",
+    "equipment": "bag"
+  },
+  {
+    "id": "step-drag-basics",
+    "title": "Step-Drag in Four Directions",
+    "category": "footwork",
+    "instructions": [
+      "Take your stance in the center of your space.",
+      "Move forward: step with the lead foot first, then drag the rear foot up to restore stance width.",
+      "Move back: step with the rear foot first, then drag the lead foot.",
+      "Move left: lead foot steps, rear foot follows. Move right: rear foot steps, lead foot follows.",
+      "Work each direction for 1 minute, then 2 minutes mixing directions on your own call.",
+      "Never cross your feet, never let them touch — the stance survives every step."
+    ],
+    "sets_reps": "6 x 1-minute segments",
+    "coaching_points": [
+      "The foot nearest the direction of travel always moves first",
+      "Small steps keep you ready to punch; big steps leave you stranded",
+      "Stay on the balls of your feet — flat feet can't step-drag"
+    ],
+    "targets_faults": ["crossing-feet", "flat-footed"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "pivot-clock",
+    "title": "Pivot Clock Drill",
+    "category": "footwork",
+    "instructions": [
+      "Imagine a clock face on the floor; you start at 6 o'clock facing 12.",
+      "Pivot 45 degrees on your lead foot, letting the rear foot swing around — land balanced, guard up.",
+      "Work through 90 and 180 degrees, then repeat pivoting the other direction.",
+      "After each pivot, freeze: you should be able to throw a clean 1-2 immediately.",
+      "Do 2 minutes of pivots on call (partner calls the angle), then 2 minutes freestyle.",
+      "Small pivots for small angles; keep the lead foot as the anchor every time."
+    ],
+    "sets_reps": "2 x 2-minute rounds",
+    "coaching_points": [
+      "Pivot on the ball of the lead foot, not the heel",
+      "The pivot creates a new angle while keeping you in punching range",
+      "Head stays level through the turn — bobbing up gives away the move"
+    ],
+    "targets_faults": ["no-pivot"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "lateral-line-shuffle",
+    "title": "Lateral Line Shuffle",
+    "category": "footwork",
+    "instructions": [
+      "Lay a straight line of tape about 15 feet long on the floor.",
+      "Shuffle laterally along the line: 10 steps one way, 10 back, staying low.",
+      "Your feet never cross and never click together — push off the inside edge of the trailing foot.",
+      "Keep your guard up and eyes forward the whole time, as if tracking an opponent.",
+      "Do 4 lengths at moderate pace, then 4 lengths as fast as you can without crossing.",
+      "If your feet cross, slow down: speed without form is just bad habits faster."
+    ],
+    "sets_reps": "8 lengths total",
+    "coaching_points": [
+      "Lateral movement escapes straight punches and sets up angles",
+      "Crossed feet mean one trip away from the canvas",
+      "Stay low — standing tall to move fast is a contradiction"
+    ],
+    "targets_faults": ["crossing-feet"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "in-out-jab",
+    "title": "In-and-Out Jab Round",
+    "category": "footwork",
+    "instructions": [
+      "Start out of range from a heavy bag or imaginary opponent.",
+      "Step-drag in and land the jab as your lead foot plants; immediately step straight back out.",
+      "Stay on the balls of your feet through the whole round — no flat-footed resting.",
+      "Vary the rhythm: sometimes double-step in, sometimes feint the entry and stay out.",
+      "Work 3 minutes, resting only in your stance, never by standing up.",
+      "Final 30 seconds: every entry must end with the jab landing — no empty steps."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "In-and-out movement controls range; range controls the fight",
+      "The exit is as important as the entry — don't admire your jab",
+      "Light feet, not fast feet: efficiency beats frantic bouncing"
+    ],
+    "targets_faults": ["flat-footed", "lunging-steps"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "circle-the-bag",
+    "title": "Circle the Heavy Bag",
+    "category": "footwork",
+    "instructions": [
+      "Take jab range from the heavy bag.",
+      "Circle the bag to your left for 90 seconds using small step-drag steps, maintaining exact range.",
+      "Reverse and circle right for 90 seconds — both directions must feel equal.",
+      "Throw a jab every third step without breaking stride or changing range.",
+      "If you drift too close or too far, correct with one small step — never a lunge.",
+      "Finish with 1 minute of circling where a partner randomly calls 'in!' and you step in with a 1-2, then resume range."
+    ],
+    "sets_reps": "2 x 4-minute rounds",
+    "coaching_points": [
+      "Circling at constant range is ring generalship in its simplest form",
+      "Small steps keep your weight under you; lunges hand your balance to the opponent",
+      "Move your feet as much when you're 'doing nothing' as when attacking"
+    ],
+    "targets_faults": ["flat-footed", "poor-distance-control"],
+    "difficulty": "intermediate",
+    "equipment": "bag"
+  },
+  {
+    "id": "l-step-angles",
+    "title": "L-Step Angle Creation",
+    "category": "footwork",
+    "instructions": [
+      "Face an imaginary opponent in your stance.",
+      "Step your lead foot out at a 45-degree angle to the side (forming the foot of the 'L'), then drag the rear foot to reset.",
+      "You should now be offline from where the opponent's straight punches travel, but still in range to punch.",
+      "Throw a 1-2 from the new angle, then L-step back to center.",
+      "Practice both sides for 2 minutes, then add a pivot after the L-step for sharper angles.",
+      "Never step straight back to escape — the L-step replaces the backward retreat."
+    ],
+    "sets_reps": "3 x 2-minute rounds",
+    "coaching_points": [
+      "Angles make you hard to hit and easy to hit from — it's pure profit",
+      "Stepping straight back keeps you in the line of fire; stepping offline ends the exchange on your terms",
+      "Land in a stance after every L-step, ready to punch immediately"
+    ],
+    "targets_faults": ["no-pivot", "backing-straight-up"],
+    "difficulty": "intermediate",
+    "equipment": "none"
+  },
+  {
+    "id": "combo-then-angle",
+    "title": "Combination Then Exit Angle",
+    "category": "footwork",
+    "instructions": [
+      "On the heavy bag, throw a 1-2-3 combination.",
+      "The instant the hook lands, pivot or L-step out to an angle — don't stand in front of the bag.",
+      "Reset at the new angle, throw the combination again, exit the other way.",
+      "Work 3 minutes; every combination must end with an exit step, no exceptions.",
+      "Round two: after the exit, immediately throw a counter 1-2 from the angle before resetting.",
+      "If you catch yourself backing straight up, stop the round and restart it."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "Finishing a combination in front of your opponent is volunteering for the counter",
+      "The exit step is part of the combination — drill it like one",
+      "Angles after punching turn defense into your next offense"
+    ],
+    "targets_faults": ["no-exit-after-combo", "backing-straight-up"],
+    "difficulty": "intermediate",
+    "equipment": "bag"
+  },
+  {
+    "id": "cut-the-ring",
+    "title": "Cut the Ring (Partner)",
+    "category": "footwork",
+    "instructions": [
+      "You and a partner move in an open space; the partner tries to circle away, you try to stay in front of them.",
+      "Use small step-drag steps to cut off their escape — step to where they're going, not where they are.",
+      "Never lunge or chase with big steps; if you lunge, the partner gets a free pass for 10 seconds.",
+      "Keep your guard up and stay in stance the whole time — you're hunting, not running.",
+      "Switch roles every 2 minutes for 3 rounds each.",
+      "The goal is to corner the partner using footwork alone, no punches."
+    ],
+    "sets_reps": "3 x 2-minute rounds each",
+    "coaching_points": [
+      "Cutting the ring is geometry: shrink their space with each step",
+      "Lunging after a mover wastes energy and leaves you off balance when they turn",
+      "Stay patient — the ring gets smaller on its own if your steps are disciplined"
+    ],
+    "targets_faults": ["lunging-steps", "poor-distance-control"],
+    "difficulty": "advanced",
+    "equipment": "none"
+  },
+  {
+    "id": "slip-rope-ladder",
+    "title": "Slip Rope Weave",
+    "category": "head-movement",
+    "instructions": [
+      "Tie a rope (or hand wraps knotted together) between two points at about shoulder height.",
+      "Stand at one end in your stance; roll under the rope by bending your knees and dipping your head to the side.",
+      "Come back up on the other side with your hands still at your cheeks.",
+      "Walk the length of the rope, rolling under it every step — down on one side, up on the other.",
+      "Add a jab before each roll: jab, roll under, come up, jab again.",
+      "Work the rope for 3 minutes; your legs should burn — that's the point."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "Rolls come from the knees, not from bending at the waist",
+      "Hands stay home through the entire roll — dropping them is the classic error",
+      "Moving head + moving feet together is what makes defense real"
+    ],
+    "targets_faults": ["no-head-movement"],
+    "difficulty": "beginner",
+    "equipment": "slip-rope"
+  },
+  {
+    "id": "mirror-slip-check",
+    "title": "Mirror Slip Technique Check",
+    "category": "head-movement",
+    "instructions": [
+      "Face a mirror in your stance.",
+      "Slip to your left: shift your head about 6 inches off center, bending slightly at the knees and waist together.",
+      "Return to center, then slip right the same way. Watch that your eyes stay level — no dipping or rising.",
+      "Add variety: slip left, slip right, roll under — never the same move twice in a row.",
+      "Do 2 minutes slow and precise, then 1 minute at speed while keeping the movement small.",
+      "If your head moves more than a few inches, you're over-slipping and wasting motion."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "A slip moves the head just off the punch's path — inches, not feet",
+      "Predictable head movement (same rhythm every time) gets timed and punished",
+      "Weight stays centered; reaching with the slip is just falling with style"
+    ],
+    "targets_faults": ["no-head-movement", "predictable-head-movement"],
+    "difficulty": "beginner",
+    "equipment": "mirror"
+  },
+  {
+    "id": "jab-slip-cross",
+    "title": "Jab, Slip, Cross",
+    "category": "head-movement",
+    "instructions": [
+      "Shadowbox the sequence: throw the jab, slip outside (to your left for orthodox), then throw the cross.",
+      "The slip must come from a small knee bend and torso shift — your head goes offline while your feet stay planted.",
+      "Return from the slip directly into the cross; the rotation of the slip loads the cross.",
+      "Do 2 minutes slow, grooving the rhythm: punch — move — punch.",
+      "Next 2 minutes: alternate slipping inside and outside after the jab, cross follows each.",
+      "Final minute at full speed — the slip must stay small even when you're moving fast."
+    ],
+    "sets_reps": "3 x 2-minute rounds (with 1-min speed finisher)",
+    "coaching_points": [
+      "Defense between punches is what separates combinations from arm-flailing",
+      "The slip loads your hips for the cross — defense becomes offense",
+      "Keep the rear hand on your cheek through the slip; it's your insurance"
+    ],
+    "targets_faults": ["no-head-movement"],
+    "difficulty": "intermediate",
+    "equipment": "none"
+  },
+  {
+    "id": "pull-counter-control",
+    "title": "Controlled Pull Counter",
+    "category": "head-movement",
+    "instructions": [
+      "In your stance, practice the pull: shift your weight onto your rear foot, letting your head drift back just out of range.",
+      "The movement is small — a few inches — chin tucked, eyes forward, guard intact.",
+      "The instant your weight settles back, fire the cross counter off the rear foot.",
+      "Do 10 slow reps in the mirror, checking that you never lean past your balance point.",
+      "With a partner throwing slow jabs, pull and counter for 2-minute rounds.",
+      "If you feel yourself falling backward, the pull is too big — shrink it."
+    ],
+    "sets_reps": "3 x 2-minute rounds",
+    "coaching_points": [
+      "The pull is a weight shift, not a lean — leaning back is a balance disaster",
+      "Counter immediately; a pull without a counter is just retreating",
+      "This is an advanced timing move — master the slip first"
+    ],
+    "targets_faults": ["excessive-lean-back"],
+    "difficulty": "intermediate",
+    "equipment": "none"
+  },
+  {
+    "id": "roll-the-hook",
+    "title": "Roll Under the Hook",
+    "category": "head-movement",
+    "instructions": [
+      "A partner throws slow lead hooks at your head (gloves on, controlled).",
+      "As the hook comes, bend your knees and roll your head under and slightly to the side of the punch.",
+      "Your hands stay at your cheeks through the entire roll.",
+      "Come up on the other side already punching — the roll ends in your counter.",
+      "Start at quarter speed for 2 minutes, then half speed; never go full speed in this drill.",
+      "Switch sides so you practice rolling both directions."
+    ],
+    "sets_reps": "4 x 2-minute rounds",
+    "coaching_points": [
+      "Roll under hooks, never straight punches — rolling into a cross is a classic knockout",
+      "Don't roll too low; stay coiled and ready to spring up punching",
+      "The counter is the point of the roll — defense that doesn't lead to offense is just surviving"
+    ],
+    "targets_faults": ["no-head-movement"],
+    "difficulty": "advanced",
+    "equipment": "none"
+  }
+  ,
+  {
+    "id": "static-balance-block",
+    "title": "Static Balance Block Test",
+    "category": "defense",
+    "instructions": [
+      "Take your stance; a partner faces you wearing gloves.",
+      "The partner throws one slow punch at a time — first open-hand taps to your shoulders, then light straight punches.",
+      "Block each one from your stance: gloves to the head shots, elbows to the body shots.",
+      "The goal is balance, not speed — don't get pushed over, don't step, don't lean.",
+      "Start with one punch every 5 seconds; as you stabilize, go to one every 3 seconds.",
+      "Harder version: throw any punch and hold it out while the partner taps your exposed side — stay rooted."
+    ],
+    "sets_reps": "4 x 2-minute rounds",
+    "coaching_points": [
+      "This tests whether you can stand properly before it tests your defense",
+      "Block by recovering your gloves to position, not by chasing the punch",
+      "Exhale sharply on each block — breath and a slight brace repel the impact"
+    ],
+    "targets_faults": ["hands-low", "stance-drifts"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "outside-parry-jab",
+    "title": "Outside Parry Against the Jab",
+    "category": "defense",
+    "instructions": [
+      "A partner throws slow, steady jabs at your head.",
+      "With your lead hand, tap the jab slightly aside — a small redirect, not a slap.",
+      "The motion is inches: deflect the punch off its line while your rear hand stays glued to your cheek.",
+      "Parry and immediately return the lead hand to guard — don't leave it hanging out.",
+      "Do 2 minutes parrying only, then 2 minutes where you parry and fire an immediate jab back.",
+      "Keep the parry minimal; big parries open your guard wider than the punch would have."
+    ],
+    "sets_reps": "2 x 2-minute rounds (+ 2-min counter version)",
+    "coaching_points": [
+      "Parries work best against long straight punches — that's their designed purpose",
+      "Small deflection, instant return — the parry is a detour, not a destination",
+      "Chin stays down through the parry; lifting it to watch is a common mistake"
+    ],
+    "targets_faults": ["no-parry"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "high-guard-catch",
+    "title": "High Guard Catch Round",
+    "category": "defense",
+    "instructions": [
+      "Take a tight high guard: gloves at your forehead, elbows in, chin down, eyes open.",
+      "A partner throws slow 1-2 combinations at your head; catch them on your gloves and forearms.",
+      "Don't flinch, don't look away, don't hold your breath — absorb calmly.",
+      "Between combinations, the partner feints — don't react to feints, only to real punches.",
+      "Work 2-minute rounds; the partner gradually increases speed as your composure holds.",
+      "Final round: after each caught combination, fire back a 1-2 of your own."
+    ],
+    "sets_reps": "3 x 2-minute rounds",
+    "coaching_points": [
+      "Blocking is the easiest defense to learn — master it before fancy head movement",
+      "Eyes open and breathing: panic is what makes people turn away",
+      "A caught punch is a counter opportunity — the partner's hands are busy"
+    ],
+    "targets_faults": ["hands-low", "dropping-hands-under-pressure"],
+    "difficulty": "beginner",
+    "equipment": "none"
+  },
+  {
+    "id": "floor-to-ceiling-defense",
+    "title": "Floor-to-Ceiling Bag Defense",
+    "category": "defense",
+    "instructions": [
+      "Stand in front of a floor-to-ceiling (double-end style rebound) bag.",
+      "Throw a single jab; the bag rebounds toward your face — slip, parry, or block it.",
+      "You may not throw your next punch until you've defended the rebound.",
+      "Start with single punches, then build to 1-2s, defending after every combination.",
+      "The bag's return is unpredictable — that's the point; react, don't anticipate.",
+      "Work 3-minute rounds; count how many rebounds touch you and drive the number down."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "This bag teaches the punch-defense-punch rhythm that defines real exchanges",
+      "Defend first, punch second — reversing that order is how you get caught",
+      "Keep the defensive motion small; the bag is fast and big motions won't catch up"
+    ],
+    "targets_faults": ["no-head-movement", "no-parry"],
+    "difficulty": "intermediate",
+    "equipment": "bag"
+  },
+  {
+    "id": "defense-only-round",
+    "title": "Defense-Only Sparring Round",
+    "category": "defense",
+    "instructions": [
+      "Light, controlled partner work: the partner attacks at about half speed and power.",
+      "You may not throw a single punch — only block, parry, slip, roll, and move your feet.",
+      "Survive 2-minute rounds purely on defense, staying calm and balanced.",
+      "Focus on one defensive tool per round: round one blocks only, round two slips and rolls, round three anything.",
+      "The partner should tell you afterward which defense you relied on most and which felt shakiest.",
+      "Build to 3-minute rounds; composure under fire is the skill being trained."
+    ],
+    "sets_reps": "3 x 2-minute rounds (build to 3 min)",
+    "coaching_points": [
+      "Removing offense forces your defense to actually work — no hiding behind punching",
+      "Stay relaxed; tension slows every defensive reaction",
+      "Footwork is defense too — stepping out of range counts and it's often the best option"
+    ],
+    "targets_faults": ["static-defense", "dropping-hands-under-pressure"],
+    "difficulty": "intermediate",
+    "equipment": "none"
+  },
+  {
+    "id": "block-to-counter",
+    "title": "Block-to-Counter on the Mitts",
+    "category": "defense",
+    "instructions": [
+      "A partner holds mitts and feeds you slow jab-cross combinations.",
+      "Block or parry each punch, then fire the immediate counter the mitt holder presents.",
+      "The counter must come instantly — defense and offense are one beat, not two.",
+      "Start with scripted counters (block jab, counter cross), then let the holder call them live.",
+      "Work 3-minute rounds; the holder increases speed as your counters stay sharp.",
+      "Every defensive motion should load the counter: the block's rotation feeds the punch."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "A defense that doesn't create offense is just delaying the inevitable",
+      "The fastest counter is the one your defensive motion already started",
+      "Stay in range through the defense — running away wastes the opening you earned"
+    ],
+    "targets_faults": ["static-defense", "no-parry"],
+    "difficulty": "advanced",
+    "equipment": "mitts"
+  },
+  {
+    "id": "shoulder-roll-intro",
+    "title": "Shoulder Roll Introduction (Advanced)",
+    "category": "defense",
+    "instructions": [
+      "Note: this is an advanced technique for experienced boxers — master the basic guard first.",
+      "In your stance, raise your lead shoulder high, tuck your chin behind it, rear hand at your cheek.",
+      "Practice the rolling motion slowly in a mirror: rotate the shoulder to deflect an imaginary straight punch.",
+      "The punch should glance off the deltoid, not land flush — angle, not absorption.",
+      "Have a partner throw very slow straight punches while you roll them off the shoulder.",
+      "Never use this at close range or against hooks until a coach clears you — it has real limitations."
+    ],
+    "sets_reps": "3 x 2-minute slow rounds",
+    "coaching_points": [
+      "The shoulder roll suits certain body types and styles — it's not for everyone",
+      "It fails against tight hooks and at clinch range; know its limits",
+      "Hands stay free to counter — that's the technique's entire payoff"
+    ],
+    "targets_faults": ["static-defense"],
+    "difficulty": "advanced",
+    "equipment": "none"
+  },
+  {
+    "id": "one-two-metronome",
+    "title": "1-2 Metronome (Heavy Bag)",
+    "category": "combinations",
+    "instructions": [
+      "Work the heavy bag for a 3-minute round throwing nothing but the jab-cross.",
+      "Keep an even rhythm — like a metronome — with full snap and full return on every punch.",
+      "Every jab sets up the cross; every cross is thrown with hip rotation and a pivoted rear foot.",
+      "Between combinations, bounce lightly in your stance — never flat-footed, never admiring the bag.",
+      "Round two: vary the rhythm — double up the jab sometimes (1-1-2), pause sometimes — but only 1s and 2s.",
+      "Count your clean 1-2s per round; the number should rise as the motion gets automatic."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "The 1-2 is the foundation every longer combination is built from — it must be automatic",
+      "Even rhythm first, broken rhythm later; chaos without fundamentals is just flailing",
+      "Both punches return to guard — the combination isn't done until the hands are home"
+    ],
+    "targets_faults": ["single-punches-only"],
+    "difficulty": "beginner",
+    "equipment": "bag"
+  },
+  {
+    "id": "one-two-hook-build",
+    "title": "1-2-3 Builder (Heavy Bag)",
+    "category": "combinations",
+    "instructions": [
+      "On the heavy bag, throw the 1-2, then add the lead hook: jab-cross-hook.",
+      "The hook pivots the lead foot with a 90-degree elbow — the same geometry from the mirror drill.",
+      "Throw the three punches as one flowing motion, not three separate punches.",
+      "After the hook, snap back to guard before anything else.",
+      "Work 3 minutes, then add a final cross: 1-2-3-2 for the last minute of each round.",
+      "If the hook gets loopy when you're tired, slow down — the arc must stay tight."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "Straight punches then a hook is the classic head-target combination — learn its feel",
+      "The hook's rotation is the same hip turn as the cross, just redirected",
+      "Flow matters more than power; speed comes from relaxation between punches"
+    ],
+    "targets_faults": ["single-punches-only", "no-hip-rotation"],
+    "difficulty": "beginner",
+    "equipment": "bag"
+  },
+  {
+    "id": "head-body-level-change",
+    "title": "Head-Body Level Change (Heavy Bag)",
+    "category": "combinations",
+    "instructions": [
+      "On the heavy bag, throw a 1-2 to the head, then drop your level and throw a 1-2 to the body.",
+      "The level change comes from bending your knees — never from reaching down or bowing at the waist.",
+      "Alternate head and body every combination for the full round.",
+      "Keep your eyes up and chin tucked even when punching low — the head stays protected.",
+      "Round two: mix it — 1-2 head then hook to the body, or double jab body then cross head.",
+      "Finish each round with 30 seconds of free head-body mixing at speed."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "Body punches make opponents drop their hands — then the head is open",
+      "Bend the knees to change levels; the spine angle barely changes",
+      "Never admire body work with your head down — come back up behind your guard"
+    ],
+    "targets_faults": ["no-level-changes"],
+    "difficulty": "intermediate",
+    "equipment": "bag"
+  },
+  {
+    "id": "jab-body-cross-head",
+    "title": "Jab to Body, Cross to Head",
+    "category": "combinations",
+    "instructions": [
+      "Step in with a level change and drive the jab into the bag's midsection.",
+      "Come up off the jab and fire the cross to the head in one continuous motion.",
+      "The combination is down-up: body shot drops the guard, head shot exploits it.",
+      "Keep the rear hand at your cheek during the body jab — you're bent, not open.",
+      "Work 3 minutes alternating with the reverse: jab head, cross body.",
+      "Add footwork in round three: step in with the combo, pivot out after."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "High-low combinations are among the highest-percentage sequences in boxing",
+      "The level change must be quick — lingering low is dangerous",
+      "Sell the body shot with your knees so the head shot lands clean"
+    ],
+    "targets_faults": ["no-level-changes"],
+    "difficulty": "intermediate",
+    "equipment": "bag"
+  },
+  {
+    "id": "combo-exit-jab",
+    "title": "Combination Exit Jab (Mitts)",
+    "category": "combinations",
+    "instructions": [
+      "A partner holds mitts; throw any 3-punch combination they call.",
+      "The instant the last punch lands, throw an exit jab while stepping out at an angle.",
+      "The exit jab doesn't need power — its job is to cover your exit and reset range.",
+      "Never finish a combination standing in the pocket; the exit is mandatory.",
+      "The holder occasionally throws a counter mitt at you after your combo — the exit jab must beat it.",
+      "Work 3-minute rounds, varying the combinations; the exit stays constant."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "Most beginners get hit after their own combinations, not during them",
+      "The exit jab buys safe distance while keeping you offensively engaged",
+      "Angle out, never straight back — the footwork drills built this habit"
+    ],
+    "targets_faults": ["no-exit-after-combo"],
+    "difficulty": "intermediate",
+    "equipment": "mitts"
+  },
+  {
+    "id": "championship-rounds-bag",
+    "title": "Championship Rounds (Heavy Bag)",
+    "category": "combinations",
+    "instructions": [
+      "Three 3-minute heavy bag rounds with 1-minute rests — full fight simulation.",
+      "Combinations only: no single punches allowed for the entire drill.",
+      "Pace yourself like a real fight: busy first round, measured second, everything left in the third.",
+      "In the last 30 seconds of each round, empty the tank — then check: is your guard still up?",
+      "Between rounds, hands stay up while you breathe; dropping them in the rest is a habit, not recovery.",
+      "Score each round: clean combinations landed vs. times your guard dropped from fatigue."
+    ],
+    "sets_reps": "3 x 3-minute rounds",
+    "coaching_points": [
+      "Technique under fatigue is the real test — anyone looks good fresh",
+      "The guard must survive the round, not just start it",
+      "Pace with your breathing: exhale on every punch, never hold your breath in a flurry"
+    ],
+    "targets_faults": ["hands-drop-when-tired", "gassing-late"],
+    "difficulty": "advanced",
+    "equipment": "bag"
+  },
+  {
+    "id": "rope-rounds",
+    "title": "Jump Rope Rounds",
+    "category": "conditioning",
+    "instructions": [
+      "Jump rope for 3-minute rounds with 1-minute rests, matching boxing round timing.",
+      "Stay on the balls of your feet with small, quiet jumps — barely leaving the ground.",
+      "Keep your shoulders relaxed and turn the rope with your wrists, not your arms.",
+      "Alternate 1 minute basic bounce, 1 minute boxer's step (shifting weight side to side), 1 minute high knees.",
+      "Build from 3 rounds to 6 over several weeks.",
+      "If you trip, restart the jump immediately — recovering rhythm fast is part of the training."
+    ],
+    "sets_reps": "3-6 x 3-minute rounds",
+    "coaching_points": [
+      "Rope work builds the calf endurance and rhythm that footwork runs on",
+      "Relaxed shoulders: tension in the rope becomes tension in your punches",
+      "Boxing conditioning is interval-based — train in rounds, not in miles"
+    ],
+    "targets_faults": ["gassing-late", "slow-recovery"],
+    "difficulty": "beginner",
+    "equipment": "rope"
+  },
+  {
+    "id": "bag-sprint-intervals",
+    "title": "Heavy Bag Sprint Intervals",
+    "category": "conditioning",
+    "instructions": [
+      "Set an interval timer: 20 seconds all-out, 40 seconds easy, for 8 cycles.",
+      "During the 20-second bursts, throw non-stop flurries at the heavy bag — maximum output.",
+      "During the 40-second recovery, bounce lightly in your stance and breathe — hands stay up.",
+      "Keep punching form honest during the bursts; sloppy tired punches injure wrists.",
+      "Rest 2 minutes, then do a second block of 8 if your form survived the first.",
+      "Track your punch count per burst; the goal is maintaining output across all 8."
+    ],
+    "sets_reps": "8 x (20s on / 40s off), 1-2 blocks",
+    "coaching_points": [
+      "Fights are won in bursts — train the burst and the recovery between them",
+      "The easy intervals are active: stance, bounce, breathe, guard up",
+      "If your output collapses by round 5, your pacing needs work, not just your fitness"
+    ],
+    "targets_faults": ["gassing-late", "slow-recovery"],
+    "difficulty": "intermediate",
+    "equipment": "bag"
+  },
+  {
+    "id": "roadwork-fartlek",
+    "title": "Fartlek Roadwork",
+    "category": "conditioning",
+    "instructions": [
+      "Run for 30 minutes total on a route with some variation (hills ideal, flat fine).",
+      "Alternate 2 minutes easy jogging with 1 minute of hard pickups — sprint the pickups.",
+      "During easy sections, practice boxing breathing: rhythmic exhales, relaxed shoulders.",
+      "During pickups, drive with your arms as if pumping punches — running form feeds fighting form.",
+      "Finish the last 5 minutes with 30-second sprint / 30-second jog alternations.",
+      "Cool down with 5 minutes of walking; stretch at the gym, not immediately after."
+    ],
+    "sets_reps": "30 minutes (2 min easy / 1 min hard)",
+    "coaching_points": [
+      "Boxing is an interval sport — fartlek running matches its energy demands better than steady jogging",
+      "Keep roadwork moderate in volume; excessive long slow distance can blunt punching power",
+      "Consistency beats heroics: regular 30-minute sessions over occasional epics"
+    ],
+    "targets_faults": ["gassing-late", "slow-recovery"],
+    "difficulty": "intermediate",
+    "equipment": "none"
+  },
+  {
+    "id": "fatigue-technique-round",
+    "title": "Technique Under Fatigue",
+    "category": "conditioning",
+    "instructions": [
+      "Do a hard conditioning burst first: 2 minutes of burpees, mountain climbers, or all-out bag flurries.",
+      "Immediately — no rest — shadowbox for 2 minutes focusing purely on technique.",
+      "Throw clean 1-2s, hooks with proper rotation, and keep your guard perfect despite the fatigue.",
+      "Have a partner (or camera) watch specifically for: dropping hands, arm punches, and stance widening.",
+      "Rest 1 minute, then repeat the whole sequence twice more.",
+      "The drill is passed when your third-round technique looks like your first."
+    ],
+    "sets_reps": "3 x (2-min burst + 2-min technique)",
+    "coaching_points": [
+      "Fights are decided late when technique degrades — this trains technique to survive",
+      "Fatigue exposes your true habits; whatever breaks here is what needs drilling fresh",
+      "Slow down before you get sloppy — clean slow beats fast and broken"
+    ],
+    "targets_faults": ["hands-drop-when-tired", "arm-punching"],
+    "difficulty": "advanced",
+    "equipment": "none"
+  }
+]

@@ -1,0 +1,15 @@
+# Original APK + extracted reference bundle stay local (APK is ~100MB, over GitHub's file limit)
+boxer-ai-1.0.0.apk
+reference/
+# Dependencies and build output
+node_modules/
+dist/
+build/
+# Local env files (never commit real keys)
+.env
+.env*.local
+# Expo
+.expo/
+web-build/
+# OS
+.DS_Store

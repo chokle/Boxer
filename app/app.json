@@ -1,1 +1,57 @@
-{"expo":{"android":{"adaptiveIcon":{"backgroundColor":"#0a0a0c","foregroundImage":"./assets/adaptive-icon.png"},"edgeToEdgeEnabled":true,"package":"com.boxerai.app","permissions":["CAMERA"],"versionCode":1},"icon":"./assets/icon.png","ios":{"bundleIdentifier":"com.boxerai.app","infoPlist":{"NSCameraUsageDescription":"Boxer AI needs camera access to record your training footage and take your profile photo.","NSPhotoLibraryAddUsageDescription":"Boxer AI needs photo library access so you can pick training videos and photos for analysis.","NSPhotoLibraryUsageDescription":"Boxer AI needs photo library access so you can pick training videos and photos for analysis."},"supportsTablet":false},"name":"Boxer AI","newArchEnabled":true,"orientation":"portrait","plugins":["expo-router",["expo-image-picker",{"cameraPermission":"Boxer AI needs camera access to record your training footage and take your profile photo.","microphonePermission":false,"photosPermission":"Boxer AI needs photo library access so you can pick training videos and photos for analysis."}]],"scheme":"mobile","slug":"boxer-ai","splash":{"backgroundColor":"#0a0a0c","image":"./assets/splash-icon.png","resizeMode":"contain"},"userInterfaceStyle":"dark","version":"1.0.0","web":{"favicon":"./assets/favicon.png"}}}
+{
+  "expo": {
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0a0a0c",
+        "foregroundImage": "./assets/adaptive-icon.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.boxerai.app",
+      "permissions": [
+        "CAMERA"
+      ],
+      "versionCode": 1
+    },
+    "icon": "./assets/icon.png",
+    "ios": {
+      "bundleIdentifier": "com.boxerai.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Boxer AI needs camera access to record your training footage and take your profile photo.",
+        "NSPhotoLibraryAddUsageDescription": "Boxer AI needs photo library access so you can pick training videos and photos for analysis.",
+        "NSPhotoLibraryUsageDescription": "Boxer AI needs photo library access so you can pick training videos and photos for analysis."
+      },
+      "supportsTablet": false
+    },
+    "name": "Boxer AI",
+    "newArchEnabled": true,
+    "orientation": "portrait",
+    "plugins": [
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Boxer AI needs camera access to record your training footage and take your profile photo.",
+          "microphonePermission": false,
+          "photosPermission": "Boxer AI needs photo library access so you can pick training videos and photos for analysis."
+        }
+      ]
+    ],
+    "scheme": "mobile",
+    "slug": "boxer-ai",
+    "splash": {
+      "backgroundColor": "#0a0a0c",
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain"
+    },
+    "userInterfaceStyle": "dark",
+    "version": "1.0.0",
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b4008939-f94d-41dc-ab41-d969356cfebf"
+      }
+    }
+  }
+}

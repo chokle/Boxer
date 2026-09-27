@@ -5,6 +5,17 @@ import { StatusBar } from 'expo-status-bar';
 import { trySupabase } from '../lib/supabase';
 import { introStore } from '../lib/store';
 import { colors } from '../lib/theme';
+import {
+  getFatalError,
+  installGlobalHandler,
+  onFatalError,
+  type FatalErrorInfo,
+} from '../lib/crashReporter';
+import { ErrorBoundary } from '../components/ErrorBoundary';
+import { FatalErrorScreen } from '../components/FatalErrorScreen';
+
+// Surface fatal JS errors on screen (production) instead of dying silently.
+installGlobalHandler();
 
 function Loading() {
   return (
@@ -18,8 +29,11 @@ export default function RootLayout() {
   const [ready, setReady] = useState(false);
   const [introDone, setIntroDone] = useState<boolean | null>(null);
   const [session, setSession] = useState<boolean | null>(null);
+  const [fatal, setFatal] = useState<FatalErrorInfo | null>(() => getFatalError());
   const router = useRouter();
   const segments = useSegments();
+
+  useEffect(() => onFatalError(setFatal), []);
 
   useEffect(() => {
     let mounted = true;
@@ -61,12 +75,15 @@ export default function RootLayout() {
     }
   }, [ready, introDone, session, segments]);
 
+  if (fatal) return <FatalErrorScreen error={fatal} />;
   if (!ready) return <Loading />;
 
   return (
     <>
       <StatusBar style="light" />
-      <Slot />
+      <ErrorBoundary>
+        <Slot />
+      </ErrorBoundary>
     </>
   );
 }

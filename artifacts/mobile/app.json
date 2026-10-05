@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Boxer AI",
-    "slug": "mobile",
+    "slug": "boxer-ai",
     "version": "1.0.0",
     "sdkVersion": "54.0.0",
     "orientation": "portrait",
@@ -24,7 +24,19 @@
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#0a0a0a"
       },
-      "permissions": []
+      "permissions": ["android.permission.MODIFY_AUDIO_SETTINGS"],
+      "allowBackup": false,
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.READ_MEDIA_VIDEO",
+        "android.permission.SYSTEM_ALERT_WINDOW"
+      ]
     },
     "web": {
       "favicon": "./assets/images/icon.png"
@@ -33,11 +45,19 @@
       [
         "expo-router",
         {
-          "origin": "https://replit.com/"
+          "origin": "https://boxer-pzdn.onrender.com"
         }
       ],
+      "./plugins/android-security",
       "expo-font",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": false,
+          "microphonePermission": false
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
@@ -45,8 +65,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "7300c6cd-6742-4811-8dd5-554a1c0e26e7"
+        "projectId": "b4008939-f94d-41dc-ab41-d969356cfebf"
       }
-    }
+    },
+    "owner": "chokle"
   }
 }

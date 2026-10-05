@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -7,6 +7,7 @@ import { useColors } from "@/hooks/useColors";
 import { useBoxing } from "@/context/BoxingContext";
 import type { DrillRecommendation } from "@/types";
 import { TabBgImage, TAB_BG_IMAGES } from "@/components/TabBgImage";
+import WorkoutTimer from "@/components/WorkoutTimer";
 
 const CATEGORY_COLORS: Record<string, string> = {
   footwork: "#3b82f6",
@@ -26,8 +27,9 @@ const DIFFICULTY_COLORS: Record<string, string> = {
 export default function DrillsScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { sessions, updateDrillCompleted } = useBoxing();
+  const { sessions, updateDrillCompleted, addTimerSession } = useBoxing();
   const topPad = Platform.OS === "web" ? 67 : insets.top;
+  const [timerVisible, setTimerVisible] = useState(false);
 
   const allDrills = useMemo(() => {
     const map = new Map<string, DrillRecommendation & { sessionId: string }>();
@@ -55,6 +57,15 @@ export default function DrillsScreen() {
         contentContainerStyle={{ paddingTop: topPad + 16, paddingBottom: Platform.OS === "web" ? 120 : 100, paddingHorizontal: 20 }}
         showsVerticalScrollIndicator={false}
       >
+      {/* Floating Timer Button */}
+      <TouchableOpacity
+        style={[s.floatingTimerBtn, { backgroundColor: colors.primary, shadowColor: colors.primary }]}
+        onPress={() => setTimerVisible(true)}
+        activeOpacity={0.8}
+      >
+        <Feather name="clock" size={20} color="#fff" />
+        <Text style={s.floatingTimerText}>Workout Timer</Text>
+      </TouchableOpacity>
       <View>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Training Drills</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Personalized exercises from your match analyses</Text>
@@ -93,7 +104,7 @@ export default function DrillsScreen() {
               </View>
               {active.map((drill, i) => (
                 <View key={drill.id}>
-                  <DrillCard drill={drill} onToggle={() => toggle(drill.sessionId, drill.id, true)} colors={colors} />
+                  <DrillCard drill={drill} onToggle={() => toggle(drill.sessionId, drill.id, true)} colors={colors} onOpenTimer={() => setTimerVisible(true)} />
                 </View>
               ))}
             </View>
@@ -107,7 +118,7 @@ export default function DrillsScreen() {
               </View>
               {done.map((drill, i) => (
                 <View key={drill.id}>
-                  <DrillCard drill={drill} onToggle={() => toggle(drill.sessionId, drill.id, false)} done colors={colors} />
+                  <DrillCard drill={drill} onToggle={() => toggle(drill.sessionId, drill.id, false)} done colors={colors} onOpenTimer={() => setTimerVisible(true)} />
                 </View>
               ))}
             </View>
@@ -115,11 +126,18 @@ export default function DrillsScreen() {
         </>
       )}
       </ScrollView>
+
+      {/* Workout Timer Modal */}
+      <WorkoutTimer
+        visible={timerVisible}
+        onClose={() => setTimerVisible(false)}
+        onSaveSession={addTimerSession}
+      />
     </View>
   );
 }
 
-function DrillCard({ drill, onToggle, done = false, colors }: { drill: DrillRecommendation & { sessionId: string }; onToggle: () => void; done?: boolean; colors: ReturnType<typeof useColors> }) {
+function DrillCard({ drill, onToggle, done = false, colors, onOpenTimer }: { drill: DrillRecommendation & { sessionId: string }; onToggle: () => void; done?: boolean; colors: ReturnType<typeof useColors>; onOpenTimer: () => void }) {
   const catColor = CATEGORY_COLORS[drill.category] ?? "#6b7280";
   const diffColor = DIFFICULTY_COLORS[drill.difficulty] ?? colors.mutedForeground;
   return (
@@ -136,13 +154,22 @@ function DrillCard({ drill, onToggle, done = false, colors }: { drill: DrillReco
           {drill.focus_area ? <Text style={{ fontSize: 11, fontFamily: "Inter_400Regular", color: colors.mutedForeground, marginTop: 6 }}>Focus: {drill.focus_area}</Text> : null}
           {drill.reps ? <Text style={{ fontSize: 11, fontFamily: "Inter_400Regular", color: colors.mutedForeground }}>Reps: {drill.reps}</Text> : null}
         </View>
-        <TouchableOpacity
-          onPress={onToggle}
-          style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: done ? `${colors.success}20` : `${colors.primary}20`, alignItems: "center", justifyContent: "center" }}
-          activeOpacity={0.7}
-        >
-          <Feather name={done ? "rotate-ccw" : "check"} size={16} color={done ? colors.success : colors.primary} />
-        </TouchableOpacity>
+        <View style={{ flexDirection: "column", gap: 8, alignItems: "center" }}>
+          <TouchableOpacity
+            onPress={onToggle}
+            style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: done ? `${colors.success}20` : `${colors.primary}20`, alignItems: "center", justifyContent: "center" }}
+            activeOpacity={0.7}
+          >
+            <Feather name={done ? "rotate-ccw" : "check"} size={16} color={done ? colors.success : colors.primary} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={onOpenTimer}
+            style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: `${colors.primary}15`, borderWidth: 1, borderColor: `${colors.primary}40`, alignItems: "center", justifyContent: "center" }}
+            activeOpacity={0.7}
+          >
+            <Feather name="clock" size={14} color={colors.primary} />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -170,5 +197,24 @@ function makeStyles(colors: ReturnType<typeof useColors>) {
     empty: { borderRadius: 20, borderWidth: 1, padding: 36, alignItems: "center", marginTop: 20 },
     emptyTitle: { fontSize: 20, fontFamily: "Inter_700Bold", marginTop: 16, marginBottom: 8 },
     emptyText: { fontSize: 14, fontFamily: "Inter_400Regular", textAlign: "center", color: "#888" },
+    floatingTimerBtn: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 8,
+      paddingVertical: 12,
+      paddingHorizontal: 20,
+      borderRadius: 20,
+      marginBottom: 20,
+      shadowOpacity: 0.3,
+      shadowRadius: 8,
+      shadowOffset: { width: 0, height: 4 },
+      elevation: 4,
+    },
+    floatingTimerText: {
+      color: "#fff",
+      fontSize: 15,
+      fontFamily: "Inter_600SemiBold",
+    },
   });
 }

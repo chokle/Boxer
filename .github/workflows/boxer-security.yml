@@ -1,0 +1,28 @@
+name: Boxer release checks
+on:
+  pull_request:
+  push:
+    branches: [main, dex/playstore-security-20261005]
+permissions:
+  contents: read
+jobs:
+  security-and-bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: '1'
+      EXPO_PUBLIC_DOMAIN: boxer-pzdn.onrender.com
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: corepack enable && corepack prepare pnpm@11.15.0 --activate
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: node node_modules/typescript/bin/tsc --build --force
+      - run: pnpm --filter @workspace/mobile run typecheck && pnpm --filter @workspace/api-server run typecheck
+      - run: pnpm test:security
+      - run: pnpm --filter @workspace/api-server run build && pnpm test:api-http
+      - run: pnpm exec expo export --platform android --max-workers 1 --output-dir dist-ci
+        working-directory: artifacts/mobile

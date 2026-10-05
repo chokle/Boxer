@@ -1,4 +1,10 @@
-# Audio Assets for Workout Timer
+# Bundled workout timer chime
+
+`bell.wav` is the original generated chime bundled with the current timer. See `LICENSE.txt`. No third-party recording or download is required. Microphone permission is blocked; Android's normal `MODIFY_AUDIO_SETTINGS` permission is retained for Expo AV playback routing. Verify audible playback on a real release-installed device.
+
+The earlier asset plan below is historical; `bell.mp3` is not required by the current component.
+
+## Earlier asset plan
 
 This directory should contain the following audio files:
 

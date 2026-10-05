@@ -7,7 +7,10 @@
     "dev": "EXPO_PACKAGER_PROXY_URL=https://$REPLIT_EXPO_DEV_DOMAIN EXPO_PUBLIC_DOMAIN=$REPLIT_DEV_DOMAIN EXPO_PUBLIC_REPL_ID=$REPL_ID REACT_NATIVE_PACKAGER_HOSTNAME=$REPLIT_DEV_DOMAIN pnpm exec expo start --localhost --port $PORT",
     "build": "node scripts/build.js",
     "serve": "node server/serve.js",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "eas-build-post-install": "node scripts/verify-release.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -23,6 +26,7 @@
     "@ungap/structured-clone": "^1.3.0",
     "@workspace/api-client-react": "workspace:*",
     "babel-plugin-react-compiler": "^19.0.0-beta-e993439-20250117",
+    "babel-preset-expo": "~54.0.10",
     "expo": "~54.0.27",
     "expo-blur": "~15.0.8",
     "expo-constants": "~18.0.11",
@@ -33,7 +37,6 @@
     "expo-image-picker": "~17.0.9",
     "expo-linear-gradient": "~15.0.8",
     "expo-linking": "~8.0.10",
-    "expo-location": "~19.0.8",
     "expo-router": "~6.0.17",
     "expo-splash-screen": "~31.0.12",
     "expo-status-bar": "~3.0.9",
@@ -56,8 +59,14 @@
     "zod-validation-error": "^3.4.0"
   },
   "dependencies": {
+    "@expo/app-integrity": "~0.1.10",
+    "expo": "~54.0.33",
     "expo-asset": "~12.0.13",
     "expo-av": "~16.0.0",
-    "expo-video": "~3.0.16"
+    "expo-crypto": "~15.0.9",
+    "expo-file-system": "~19.0.21",
+    "expo-image-manipulator": "~14.0.8",
+    "react": "19.1.0",
+    "react-native": "0.81.5"
   }
 }

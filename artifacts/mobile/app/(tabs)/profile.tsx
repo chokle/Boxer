@@ -4,6 +4,7 @@ import {
   TextInput, Platform, Alert, Modal,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { useColors } from "@/hooks/useColors";
@@ -61,7 +62,8 @@ function formatTime(seconds: number): string {
 export default function ProfileScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { profile, saveProfile, sessions, timerSessions } = useBoxing();
+  const { profile, saveProfile, sessions, timerSessions, clearLocalData } = useBoxing();
+  const router = useRouter();
   const topPad = Platform.OS === "web" ? 67 : insets.top;
 
   const [name, setName] = useState(profile?.name ?? "");
@@ -196,6 +198,23 @@ export default function ProfileScreen() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
+      <TouchableOpacity accessibilityRole="link" onPress={() => router.push("/privacy")} style={{ paddingVertical: 12 }}>
+        <Text style={{ color: colors.primary }}>Privacy and data handling</Text>
+      </TouchableOpacity>
+      <TouchableOpacity accessibilityRole="button" onPress={() => Alert.alert("Delete local Boxer data?", "This permanently removes this device's profile, injuries, coaching history and timer sessions. It does not delete hosting or AI provider records.", [
+        { text: "Cancel", style: "cancel" },
+        { text: "Delete", style: "destructive", onPress: async () => {
+          try {
+            await clearLocalData();
+            setName(""); setAge(""); setReach(""); setInjuries([]);
+            setWeightKg(null); setHeightCm(null); setWeightDisplay(""); setHeightDisplay("");
+            setWeightClass("Middleweight"); setStance("Orthodox"); setLevel("Intermediate");
+            Alert.alert("Deleted", "Your local Boxer data has been removed.");
+          } catch { Alert.alert("Deletion failed", "Please try again. Your data has not been confirmed deleted."); }
+        } },
+      ])} style={{ paddingVertical: 12 }}>
+        <Text style={{ color: colors.primary }}>Delete local data</Text>
+      </TouchableOpacity>
       <View>
         <Text style={[s.pageTitle, { color: colors.foreground }]}>Boxer Profile</Text>
         <Text style={[s.pageSub, { color: colors.mutedForeground }]}>Your stats improve AI coaching accuracy</Text>

@@ -59,7 +59,7 @@ export default function WorkoutTimer({ visible, onClose, onSaveSession }: Workou
       try {
         await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
         const { sound } = await Audio.Sound.createAsync(
-          require("../assets/sounds/bell.mp3")
+          require("../assets/sounds/bell.wav")
         );
         soundRef.current = sound;
       } catch (e) {

@@ -7,6 +7,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
+import * as FileSystem from "expo-file-system/legacy";
 import { useRouter } from "expo-router";
 import { useColors } from "@/hooks/useColors";
 import { useBoxing } from "@/context/BoxingContext";
@@ -27,7 +29,7 @@ export default function AnalyzeScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { addSession, profile } = useBoxing();
+  const { addSession, profile, getDataGeneration } = useBoxing();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -42,49 +44,47 @@ export default function AnalyzeScreen() {
   const topPad = Platform.OS === "web" ? 67 : insets.top;
   const s = makeStyles(colors);
 
-  const requestPermissions = async (): Promise<boolean> => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert(
-        "Permission Required",
-        "Please allow access to your photo library to attach media.",
-        [{ text: "OK" }]
-      );
-      return false;
-    }
-    return true;
-  };
-
   const pickMedia = async () => {
     if (selectedMedia.length >= MAX_MEDIA) {
-      Alert.alert("Limit Reached", `You can attach up to ${MAX_MEDIA} photos or videos.`);
+      Alert.alert("Limit Reached", `You can attach up to ${MAX_MEDIA} photos.`);
       return;
     }
 
-    const hasPermission = await requestPermissions();
-    if (!hasPermission) return;
-
     const remaining = MAX_MEDIA - selectedMedia.length;
 
+    try {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images", "videos"],
+      mediaTypes: ["images"],
       allowsMultipleSelection: true,
       selectionLimit: remaining,
       quality: 0.6,
-      base64: true,
+      base64: false,
       orderedSelection: true,
     });
 
     if (result.canceled) return;
 
-    const newItems: MediaItem[] = result.assets.map((asset) => ({
-      uri: asset.uri,
-      type: asset.type === "video" ? "video" : "image",
-      base64: asset.base64 ?? undefined,
-    }));
+    const newItems: MediaItem[] = [];
+    for (const asset of result.assets) {
+      const width = asset.width || 1024;
+      const height = asset.height || 1024;
+      const actions = Math.max(width, height) > 1024 ? [{ resize: width >= height ? { width: 1024 } : { height: 1024 } }] : [];
+      const image = await ImageManipulator.manipulateAsync(asset.uri, actions, { compress: 0.6, format: ImageManipulator.SaveFormat.JPEG, base64: true });
+      try {
+        if (!image.base64 || image.base64.length > 500_000) throw new Error("This photo is too large. Please choose a smaller photo.");
+        newItems.push({ uri: asset.uri, type: "image", base64: image.base64 });
+      } finally {
+        if (FileSystem.cacheDirectory && image.uri.startsWith(FileSystem.cacheDirectory) && image.uri !== asset.uri) {
+          await FileSystem.deleteAsync(image.uri, { idempotent: true });
+        }
+      }
+    }
 
     setSelectedMedia((prev) => [...prev, ...newItems].slice(0, MAX_MEDIA));
     Haptics.selectionAsync();
+    } catch (error) {
+      Alert.alert("Photo unavailable", error instanceof Error ? error.message : "Please choose another photo.");
+    }
   };
 
   const removeMedia = (index: number) => {
@@ -92,10 +92,11 @@ export default function AnalyzeScreen() {
     Haptics.selectionAsync();
   };
 
-  const handleAnalyze = async () => {
+  const runAnalysis = async () => {
+    const generation = getDataGeneration();
     if (!title.trim()) { Alert.alert("Required", "Please enter a session title"); return; }
     if (!matchDescription.trim() && selectedMedia.length === 0) {
-      Alert.alert("Required", "Please add a match summary or upload at least one photo/video for AI analysis");
+      Alert.alert("Required", "Please add a match summary or upload at least one photo for AI analysis");
       return;
     }
 
@@ -114,8 +115,6 @@ export default function AnalyzeScreen() {
         .filter((m) => m.type === "image" && m.base64)
         .map((m) => m.base64!);
 
-      const hasVideo = selectedMedia.some((m) => m.type === "video");
-
       const analysis = await analyzeMatch({
         title: title.trim(),
         description: description.trim(),
@@ -124,9 +123,9 @@ export default function AnalyzeScreen() {
         match_description: matchDescription.trim(),
         boxer_profile: boxerProfile,
         images: images.length > 0 ? images : undefined,
-        has_video: hasVideo || undefined,
       });
 
+      if (generation !== getDataGeneration()) throw new Error("Your local data was deleted while this analysis was running. The result has not been saved.");
       const sessionId = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
       await addSession({
@@ -149,6 +148,13 @@ export default function AnalyzeScreen() {
     } finally {
       setAnalyzing(false);
     }
+  };
+
+  const handleAnalyze = () => {
+    Alert.alert("Send to AI coach?", "Your session notes, selected photos, stance, experience level and weight class will be sent to the Boxer AI server and OpenAI for analysis. Your name, age, injuries, height and body weight are not sent. Feedback is informational, not medical advice. Read Privacy in Profile before continuing.", [
+      { text: "Cancel", style: "cancel" },
+      { text: "Continue", onPress: () => void runAnalysis() },
+    ]);
   };
 
   const reset = () => {
@@ -302,7 +308,7 @@ export default function AnalyzeScreen() {
             )}
           </View>
           <Text style={[s.hint, { color: colors.mutedForeground }]}>
-            Attach photos or videos so your AI coach can analyze your visual technique
+            Attach photos so your AI coach can analyze your visual technique
           </Text>
 
           {selectedMedia.length > 0 && (
@@ -342,7 +348,7 @@ export default function AnalyzeScreen() {
             >
               <Feather name="plus-circle" size={18} color={colors.primary} />
               <Text style={[s.addMediaText, { color: colors.primary }]}>
-                {selectedMedia.length === 0 ? "Add Photos or Videos" : "Add More"}
+                {selectedMedia.length === 0 ? "Add Photos" : "Add More"}
               </Text>
             </TouchableOpacity>
           )}

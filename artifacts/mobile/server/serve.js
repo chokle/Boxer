@@ -66,11 +66,10 @@ function serveManifest(platform, res) {
 }
 
 function serveLandingPage(req, res, landingPageTemplate, appName) {
-  const forwardedProto = req.headers["x-forwarded-proto"];
-  const protocol = forwardedProto || "https";
-  const host = req.headers["x-forwarded-host"] || req.headers["host"];
-  const baseUrl = `${protocol}://${host}`;
-  const expsUrl = `${host}`;
+  // Never interpolate untrusted request headers into HTML.
+  const publicUrl = new URL(process.env.PUBLIC_URL || "https://boxer-pzdn.onrender.com");
+  const baseUrl = publicUrl.origin;
+  const expsUrl = publicUrl.host;
 
   const html = landingPageTemplate
     .replace(/BASE_URL_PLACEHOLDER/g, baseUrl)
@@ -108,8 +107,16 @@ const landingPageTemplate = fs.readFileSync(TEMPLATE_PATH, "utf-8");
 const appName = getAppName();
 
 const server = http.createServer((req, res) => {
-  const url = new URL(req.url || "/", `http://${req.headers.host}`);
-  let pathname = url.pathname;
+  let pathname;
+  try {
+    const host = req.headers.host;
+    if (typeof host !== "string" || !/^[a-zA-Z0-9.\-]+(?::[0-9]{1,5})?$/.test(host) || !req.url?.startsWith("/") || req.url.startsWith("//")) throw new Error("Invalid request");
+    pathname = new URL(req.url, `http://${host}`).pathname;
+  } catch {
+    res.writeHead(400, { "content-type": "text/plain" });
+    res.end("Bad Request");
+    return;
+  }
 
   if (basePath && pathname.startsWith(basePath)) {
     pathname = pathname.slice(basePath.length) || "/";

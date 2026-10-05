@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { BoxerProfile, MatchSession, AppStats, TimerSession } from '@/types';
 
@@ -15,6 +15,8 @@ interface BoxingContextType {
   updateDrillCompleted: (sessionId: string, drillId: string, completed: boolean) => Promise<void>;
   addTimerSession: (s: TimerSession) => Promise<void>;
   getStats: () => AppStats;
+  clearLocalData: () => Promise<void>;
+  getDataGeneration: () => number;
 }
 
 const BoxingContext = createContext<BoxingContextType | null>(null);
@@ -24,36 +26,45 @@ export function BoxingProvider({ children }: { children: React.ReactNode }) {
   const [sessions, setSessions] = useState<MatchSession[]>([]);
   const [timerSessions, setTimerSessions] = useState<TimerSession[]>([]);
 
+  const dataGeneration = useRef(0);
+  const sessionsRef = useRef<MatchSession[]>([]);
+  const timerSessionsRef = useRef<TimerSession[]>([]);
+  const storageQueue = useRef(Promise.resolve());
+  const persist = useCallback((key: string, value: unknown) => {
+    storageQueue.current = storageQueue.current.catch(() => undefined).then(() => AsyncStorage.setItem(key, JSON.stringify(value)));
+    return storageQueue.current;
+  }, []);
+
   useEffect(() => {
+    const generation = dataGeneration.current;
     (async () => {
       const [pRaw, sRaw, tRaw] = await Promise.all([
         AsyncStorage.getItem(PROFILE_KEY),
         AsyncStorage.getItem(SESSIONS_KEY),
         AsyncStorage.getItem(TIMER_SESSIONS_KEY),
       ]);
+      if (generation !== dataGeneration.current) return;
       if (pRaw) setProfile(JSON.parse(pRaw));
-      if (sRaw) setSessions(JSON.parse(sRaw));
-      if (tRaw) setTimerSessions(JSON.parse(tRaw));
-    })();
+      if (sRaw) { sessionsRef.current = JSON.parse(sRaw); setSessions(sessionsRef.current); }
+      if (tRaw) { timerSessionsRef.current = JSON.parse(tRaw); setTimerSessions(timerSessionsRef.current); }
+    })().catch(() => { /* Invalid local data must not crash startup. */ });
   }, []);
 
   const saveProfile = useCallback(async (p: BoxerProfile) => {
     setProfile(p);
-    await AsyncStorage.setItem(PROFILE_KEY, JSON.stringify(p));
+    await persist(PROFILE_KEY, p);
   }, []);
 
   const addSession = useCallback(async (s: MatchSession) => {
-    setSessions(prev => {
-      const next = [s, ...prev];
-      AsyncStorage.setItem(SESSIONS_KEY, JSON.stringify(next));
-      return next;
-    });
+    const next = [s, ...sessionsRef.current];
+    sessionsRef.current = next;
+    setSessions(next);
+    await persist(SESSIONS_KEY, next);
   }, []);
 
   const updateDrillCompleted = useCallback(
     async (sessionId: string, drillId: string, completed: boolean) => {
-      setSessions(prev => {
-        const next = prev.map(s => {
+        const next = sessionsRef.current.map(s => {
           if (s.id !== sessionId) return s;
           return {
             ...s,
@@ -65,19 +76,31 @@ export function BoxingProvider({ children }: { children: React.ReactNode }) {
             },
           };
         });
-        AsyncStorage.setItem(SESSIONS_KEY, JSON.stringify(next));
-        return next;
-      });
+        sessionsRef.current = next;
+        setSessions(next);
+        await persist(SESSIONS_KEY, next);
     },
     []
   );
 
   const addTimerSession = useCallback(async (s: TimerSession) => {
-    setTimerSessions(prev => {
-      const next = [s, ...prev];
-      AsyncStorage.setItem(TIMER_SESSIONS_KEY, JSON.stringify(next));
-      return next;
-    });
+    const next = [s, ...timerSessionsRef.current];
+    timerSessionsRef.current = next;
+    setTimerSessions(next);
+    await persist(TIMER_SESSIONS_KEY, next);
+  }, []);
+
+  const clearLocalData = useCallback(async () => {
+    // Invalidate pending reads, serialize deletion behind pending writes.
+    dataGeneration.current += 1;
+    const operation = storageQueue.current.catch(() => undefined).then(() => AsyncStorage.multiRemove([PROFILE_KEY, SESSIONS_KEY, TIMER_SESSIONS_KEY]));
+    storageQueue.current = operation;
+    await operation;
+    sessionsRef.current = [];
+    timerSessionsRef.current = [];
+    setProfile(null);
+    setSessions([]);
+    setTimerSessions([]);
   }, []);
 
   const getStats = useCallback((): AppStats => {
@@ -113,7 +136,7 @@ export function BoxingProvider({ children }: { children: React.ReactNode }) {
   }, [sessions]);
 
   return (
-    <BoxingContext.Provider value={{ profile, sessions, timerSessions, saveProfile, addSession, updateDrillCompleted, addTimerSession, getStats }}>
+    <BoxingContext.Provider value={{ profile, sessions, timerSessions, saveProfile, addSession, updateDrillCompleted, addTimerSession, getStats, clearLocalData, getDataGeneration: () => dataGeneration.current }}>
       {children}
     </BoxingContext.Provider>
   );

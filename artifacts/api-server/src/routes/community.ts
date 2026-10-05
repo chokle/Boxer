@@ -9,7 +9,7 @@ const router = Router();
 
 router.get("/community/gyms", async (req, res) => {
   try {
-    const rows = await db.select().from(gyms).orderBy(gyms.name);
+    const rows = await db.select().from(gyms).orderBy(gyms.name).limit(100);
     res.json({ gyms: rows });
   } catch (err) {
     req.log.error({ err }, "Failed to fetch gyms");
@@ -17,14 +17,11 @@ router.get("/community/gyms", async (req, res) => {
   }
 });
 
-router.post("/community/gyms", async (req, res) => {
-  try {
-    const [gym] = await db.insert(gyms).values(req.body).returning();
-    res.status(201).json({ gym });
-  } catch (err) {
-    req.log.error({ err }, "Failed to create gym");
-    res.status(500).json({ error: "Failed to create gym" });
-  }
+// Publishing is intentionally unavailable through the public mobile API.
+// Curated entries are maintained through the operator's authenticated database tools.
+router.post("/community/gyms", (_req, res) => {
+  res.setHeader("Allow", "GET");
+  res.status(405).json({ error: "Community publication is restricted to the publisher" });
 });
 
 // ─── FIGHTERS ────────────────────────────────────────────────────────────────
@@ -62,7 +59,7 @@ router.get("/community/fighters", async (req, res) => {
       )
       .orderBy(
         sql`CASE WHEN ${fighters.status} = 'pro' THEN ${fighters.rankPro} ELSE ${fighters.rankAmateur} END NULLS LAST`
-      );
+      ).limit(100);
 
     res.json({ fighters: rows });
   } catch (err) {
@@ -71,14 +68,11 @@ router.get("/community/fighters", async (req, res) => {
   }
 });
 
-router.post("/community/fighters", async (req, res) => {
-  try {
-    const [fighter] = await db.insert(fighters).values(req.body).returning();
-    res.status(201).json({ fighter });
-  } catch (err) {
-    req.log.error({ err }, "Failed to create fighter");
-    res.status(500).json({ error: "Failed to create fighter" });
-  }
+// Publishing is intentionally unavailable through the public mobile API.
+// Curated entries are maintained through the operator's authenticated database tools.
+router.post("/community/fighters", (_req, res) => {
+  res.setHeader("Allow", "GET");
+  res.status(405).json({ error: "Community publication is restricted to the publisher" });
 });
 
 // ─── OPPONENT MATCHING ───────────────────────────────────────────────────────
@@ -86,7 +80,7 @@ router.post("/community/fighters", async (req, res) => {
 router.get("/community/fighters/:id/opponents", async (req, res) => {
   try {
     const fighterId = parseInt(req.params.id);
-    if (isNaN(fighterId)) {
+    if (!/^\d+$/.test(String(req.params.id)) || !Number.isSafeInteger(fighterId) || fighterId < 1 || fighterId > 2147483647) {
       res.status(400).json({ error: "Invalid fighter ID" });
       return;
     }
@@ -128,7 +122,7 @@ router.get("/community/fighters/:id/opponents", async (req, res) => {
       )
       .orderBy(
         sql`ABS(
-          (${fighters.recordWins}::float / NULLIF(${fighters.recordWins} + ${fighters.recordLosses} + ${fighters.recordDraws}, 0))
+          (${fighters.recordWins}::float / NULLIF(${fighters.recordWins}::float + ${fighters.recordLosses}::float + ${fighters.recordDraws}::float, 0))
           - ${winRate}
         ) NULLS LAST`
       )
@@ -156,7 +150,7 @@ router.get("/community/tournaments", async (req, res) => {
           type ? eq(tournaments.type, type) : undefined,
         )
       )
-      .orderBy(tournaments.startDate);
+      .orderBy(tournaments.startDate).limit(100);
 
     res.json({ tournaments: rows });
   } catch (err) {
@@ -165,14 +159,11 @@ router.get("/community/tournaments", async (req, res) => {
   }
 });
 
-router.post("/community/tournaments", async (req, res) => {
-  try {
-    const [tournament] = await db.insert(tournaments).values(req.body).returning();
-    res.status(201).json({ tournament });
-  } catch (err) {
-    req.log.error({ err }, "Failed to create tournament");
-    res.status(500).json({ error: "Failed to create tournament" });
-  }
+// Publishing is intentionally unavailable through the public mobile API.
+// Curated entries are maintained through the operator's authenticated database tools.
+router.post("/community/tournaments", (_req, res) => {
+  res.setHeader("Allow", "GET");
+  res.status(405).json({ error: "Community publication is restricted to the publisher" });
 });
 
 export default router;

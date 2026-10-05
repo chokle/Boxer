@@ -1,7 +1,7 @@
 {
   "cli": {
     "version": ">= 16.0.0",
-    "appVersionSource": "local"
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -26,7 +26,7 @@
       "android": {
         "buildType": "app-bundle"
       },
-      "autoIncrement": false,
+      "autoIncrement": true,
       "env": {
         "EXPO_PUBLIC_DOMAIN": "boxer-pzdn.onrender.com"
       }

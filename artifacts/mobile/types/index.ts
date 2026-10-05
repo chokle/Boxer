@@ -83,3 +83,12 @@ export interface AppStats {
   bestScore: number;
   streak: number;
 }
+
+export interface TimerSession {
+  id: string;
+  date: string;
+  roundsCompleted: number;
+  totalSeconds: number;
+  roundDuration: number;
+  restDuration: number;
+}

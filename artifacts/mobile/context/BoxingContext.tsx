@@ -1,16 +1,19 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { BoxerProfile, MatchSession, AppStats } from '@/types';
+import type { BoxerProfile, MatchSession, AppStats, TimerSession } from '@/types';
 
 const PROFILE_KEY = '@boxer_ai_profile';
 const SESSIONS_KEY = '@boxer_ai_sessions';
+const TIMER_SESSIONS_KEY = '@boxer_ai_timer_sessions';
 
 interface BoxingContextType {
   profile: BoxerProfile | null;
   sessions: MatchSession[];
+  timerSessions: TimerSession[];
   saveProfile: (p: BoxerProfile) => Promise<void>;
   addSession: (s: MatchSession) => Promise<void>;
   updateDrillCompleted: (sessionId: string, drillId: string, completed: boolean) => Promise<void>;
+  addTimerSession: (s: TimerSession) => Promise<void>;
   getStats: () => AppStats;
 }
 
@@ -19,15 +22,18 @@ const BoxingContext = createContext<BoxingContextType | null>(null);
 export function BoxingProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<BoxerProfile | null>(null);
   const [sessions, setSessions] = useState<MatchSession[]>([]);
+  const [timerSessions, setTimerSessions] = useState<TimerSession[]>([]);
 
   useEffect(() => {
     (async () => {
-      const [pRaw, sRaw] = await Promise.all([
+      const [pRaw, sRaw, tRaw] = await Promise.all([
         AsyncStorage.getItem(PROFILE_KEY),
         AsyncStorage.getItem(SESSIONS_KEY),
+        AsyncStorage.getItem(TIMER_SESSIONS_KEY),
       ]);
       if (pRaw) setProfile(JSON.parse(pRaw));
       if (sRaw) setSessions(JSON.parse(sRaw));
+      if (tRaw) setTimerSessions(JSON.parse(tRaw));
     })();
   }, []);
 
@@ -66,6 +72,14 @@ export function BoxingProvider({ children }: { children: React.ReactNode }) {
     []
   );
 
+  const addTimerSession = useCallback(async (s: TimerSession) => {
+    setTimerSessions(prev => {
+      const next = [s, ...prev];
+      AsyncStorage.setItem(TIMER_SESSIONS_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
   const getStats = useCallback((): AppStats => {
     if (sessions.length === 0) {
       return {
@@ -99,7 +113,7 @@ export function BoxingProvider({ children }: { children: React.ReactNode }) {
   }, [sessions]);
 
   return (
-    <BoxingContext.Provider value={{ profile, sessions, saveProfile, addSession, updateDrillCompleted, getStats }}>
+    <BoxingContext.Provider value={{ profile, sessions, timerSessions, saveProfile, addSession, updateDrillCompleted, addTimerSession, getStats }}>
       {children}
     </BoxingContext.Provider>
   );

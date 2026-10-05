@@ -48,11 +48,20 @@ function cmToFtIn(cm: number) {
   return `${ft}'${inches}"`;
 }
 function ftInToCm(ft: number, inches: number) { return Math.round((ft * 12 + inches) * 2.54); }
+function formatTime(seconds: number): string {
+  const hrs = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  if (hrs > 0) {
+    return `${hrs}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
 
 export default function ProfileScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { profile, saveProfile, sessions } = useBoxing();
+  const { profile, saveProfile, sessions, timerSessions } = useBoxing();
   const topPad = Platform.OS === "web" ? 67 : insets.top;
 
   const [name, setName] = useState(profile?.name ?? "");
@@ -202,6 +211,20 @@ export default function ProfileScreen() {
             <StatItem label="Drills" value={`${sessions.reduce((a, s) => a + s.analysis.drills.length, 0)}`} colors={colors} />
             <Divider colors={colors} />
             <StatItem label="Best" value={`${Math.max(...sessions.map(s => s.analysis.overall_score))}`} colors={colors} />
+          </View>
+        </View>
+      )}
+
+      {timerSessions.length > 0 && (
+        <View>
+          <View style={[s.statsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <StatItem label="Workouts" value={`${timerSessions.length}`} colors={colors} />
+            <Divider colors={colors} />
+            <StatItem label="Total Rounds" value={`${timerSessions.reduce((a, s) => a + s.roundsCompleted, 0)}`} colors={colors} />
+            <Divider colors={colors} />
+            <StatItem label="Total Time" value={`${formatTime(timerSessions.reduce((a, s) => a + s.totalSeconds, 0))}`} colors={colors} />
+            <Divider colors={colors} />
+            <StatItem label="Best Session" value={`${Math.max(...timerSessions.map(s => s.roundsCompleted))} rounds`} colors={colors} />
           </View>
         </View>
       )}
